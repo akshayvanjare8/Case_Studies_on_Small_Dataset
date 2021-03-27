@@ -1,0 +1,459 @@
+SQL> create table Friends_group_2018
+  2  (
+  3  Fgi numeric(1) primary key,
+  4  Group_name varchar(15) not null,
+  5  Description varchar2(25)
+  6  );
+
+Table created.
+
+SQL> insert into Friends_Group_2018 values ('&Fgi','&Group_name','&Description');
+Enter value for fgi: 1
+Enter value for group_name: Studious
+Enter value for description: Very Intelligent Group
+old   1: insert into Friends_Group_2018 values ('&Fgi','&Group_name','&Description')
+new   1: insert into Friends_Group_2018 values ('1','Studious','Very Intelligent Group')
+
+1 row created.
+
+SQL> /
+Enter value for fgi: 2
+Enter value for group_name: Sports
+Enter value for description: Excellent in Sports
+old   1: insert into Friends_Group_2018 values ('&Fgi','&Group_name','&Description')
+new   1: insert into Friends_Group_2018 values ('2','Sports','Excellent in Sports')
+
+1 row created.
+
+SQL> /
+Enter value for fgi: 3
+Enter value for group_name: Mischievous
+Enter value for description: Always do Mischief
+old   1: insert into Friends_Group_2018 values ('&Fgi','&Group_name','&Description')
+new   1: insert into Friends_Group_2018 values ('3','Mischievous','Always do Mischief')
+
+1 row created.
+
+SQL> /
+Enter value for fgi: 4
+Enter value for group_name: Easy Going
+Enter value for description: No Bother
+old   1: insert into Friends_Group_2018 values ('&Fgi','&Group_name','&Description')
+new   1: insert into Friends_Group_2018 values ('4','Easy Going','No Bother')
+
+1 row created.
+
+SQL> select * from  Friends_group_2018;
+
+       FGI GROUP_NAME      DESCRIPTION
+---------- --------------- -------------------------
+         1 Studious        Very Intelligent Group
+         2 Sports          Excellent in Sports
+         3 Mischievous     Always do Mischief
+         4 Easy Going      No Bother
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+
+SQL> create table Class_Mate_2018
+  2  (
+  3  Cl numeric(1) primary key,
+  4  First_name varchar2(10) not null,
+  5  Last_name varchar2(10),
+  6  Fgi numeric(1) references Friends_Group_2018,
+  7  BirthDate date,
+  8  City varchar2(10),
+  9  phone_no varchar2(15),
+ 10  Mexpenses numeric(5)
+ 11  );
+
+Table created.
+
+SQL> insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses');
+Enter value for cl: 1
+Enter value for first_name: ashish
+Enter value for last_name: thakkar
+Enter value for fgi: 3
+Enter value for birthdate: 6-jun-2000
+Enter value for city: ahemedbad
+Enter value for phone_no: 87888523689
+Enter value for mexpenses: 2000
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('1','ashish','thakkar','3','6-jun-2000','ahemedbad','87888523689','2000')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 2
+Enter value for first_name: roma
+Enter value for last_name: patel
+Enter value for fgi: 3
+Enter value for birthdate: 27-oct-1987
+Enter value for city: anand
+Enter value for phone_no: 9995863527
+Enter value for mexpenses: 3000
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('2','roma','patel','3','27-oct-1987','anand','9995863527','3000')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 3
+Enter value for first_name: sumit
+Enter value for last_name: chaudhary
+Enter value for fgi: 1
+Enter value for birthdate: 19-oct-1993
+Enter value for city: nadiad
+Enter value for phone_no:
+Enter value for mexpenses: 1500
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('3','sumit','chaudhary','1','19-oct-1993','nadiad','','1500')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 4
+Enter value for first_name: payal
+Enter value for last_name: patel
+Enter value for fgi: 4
+Enter value for birthdate: 11-july-1993
+Enter value for city: khambhat
+Enter value for phone_no:
+Enter value for mexpenses: 2500
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('4','payal','patel','4','11-july-1993','khambhat','','2500')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 5
+Enter value for first_name: kirti
+Enter value for last_name: pandya
+Enter value for fgi: 1
+Enter value for birthdate: 1-apr-1975
+Enter value for city: kapanvani
+Enter value for phone_no: 02692-288745
+Enter value for mexpenses: 4000
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('5','kirti','pandya','1','1-apr-1975','kapanvani','02692-288745','4000')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 6
+Enter value for first_name: sumeet
+Enter value for last_name: shah
+Enter value for fgi: 4
+Enter value for birthdate: 27-feb-1986
+Enter value for city: kheda
+Enter value for phone_no: 02697-588245
+Enter value for mexpenses: 7000
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('6','sumeet','shah','4','27-feb-1986','kheda','02697-588245','7000')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 7
+Enter value for first_name: aakash
+Enter value for last_name: kansara
+Enter value for fgi: 2
+Enter value for birthdate: 16-nov-2008
+Enter value for city: anand
+Enter value for phone_no: 02698-254864
+Enter value for mexpenses: 5500
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('7','aakash','kansara','2','16-nov-2008','anand','02698-254864','5500')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 8
+Enter value for first_name: ji9nal
+Enter value for last_name: dave
+Enter value for fgi: 2
+Enter value for birthdate: 8-dec-1990
+Enter value for city: anand
+Enter value for phone_no:
+Enter value for mexpenses: 5000
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('8','ji9nal','dave','2','8-dec-1990','anand','','5000')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 9
+Enter value for first_name: keyur
+Enter value for last_name: mehta
+Enter value for fgi: 3
+Enter value for birthdate: 20-may-1989
+Enter value for city: surat
+Enter value for phone_no:
+Enter value for mexpenses: 4500
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('9','keyur','mehta','3','20-may-1989','surat','','4500')
+
+1 row created.
+
+SQL> /
+Enter value for cl: 10
+Enter value for first_name: deepa
+Enter value for last_name: goel
+Enter value for fgi: 2
+Enter value for birthdate: 24-apr-2016
+Enter value for city: ahemedabad
+Enter value for phone_no:
+Enter value for mexpenses: 3500
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('10','deepa','goel','2','24-apr-2016','ahemedabad','','3500')
+insert into Class_Mate_2018 values ('10','deepa','goel','2','24-apr-2016','ahemedabad','','3500')
+                                    *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> alter table Class_Mate_2018 modify(Cl numeric(5));
+
+Table altered.
+
+SQL> insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses');
+Enter value for cl: 10
+Enter value for first_name: deepa
+Enter value for last_name: goel
+Enter value for fgi: 2
+Enter value for birthdate: 27-apr-2016
+Enter value for city: ahemedabad
+Enter value for phone_no:
+Enter value for mexpenses: 3500
+old   1: insert into Class_Mate_2018 values ('&Cl','&First_name','&Last_name','&Fgi','&BirthDate','&City','&Phone_no','&Mexpenses')
+new   1: insert into Class_Mate_2018 values ('10','deepa','goel','2','27-apr-2016','ahemedabad','','3500')
+
+1 row created.
+
+
+SQL> select * from Class_Mate_2018;
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES
+---------- ---------- ---------- ---------- --------- ---------- --------------- ----------
+         1 ashish     thakkar             3 06-JUN-00 ahemedbad  87888523689           2000
+         2 roma       patel               3 27-OCT-87 anand      9995863527            3000
+         3 sumit      chaudhary           1 19-OCT-93 nadiad                           1500
+         4 payal      patel               4 11-JUL-93 khambhat                         2500
+         5 kirti      pandya              1 01-APR-75 kapanvani  02692-288745          4000
+         6 sumeet     shah                4 27-FEB-86 kheda      02697-588245          7000
+         7 aakash     kansara             2 16-NOV-08 anand      02698-254864          5500
+         8 ji9nal     dave                2 08-DEC-90 anand                            5000
+         9 keyur      mehta               3 20-MAY-89 surat                            4500
+        10 deepa      goel                2 27-APR-16 ahemedabad                       3500
+
+10 rows selected.
+
+
+#######################################################################################################################################################################
+
+###### QUERIES ######
+
+1)
+
+SQL> select * from Class_Mate_2018 where First_name like '_____' and Last_name like '_____';
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES
+---------- ---------- ---------- ---------- --------- ---------- --------------- ----------
+         4 payal      patel               4 11-JUL-93 khambhat                         2500
+         9 keyur      mehta               3 20-MAY-89 surat                            4500
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+
+2)
+
+SQL> select * from Class_Mate_2018 where First_name like 'a%' or Last_name like 'p%';
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES
+---------- ---------- ---------- ---------- --------- ---------- --------------- ----------
+         1 ashish     thakkar             3 06-JUN-00 ahemedbad  87888523689           2000
+         2 roma       patel               3 27-OCT-87 anand      9995863527            3000
+         4 payal      patel               4 11-JUL-93 khambhat                         2500
+         5 kirti      pandya              1 01-APR-75 kapanvani  02692-288745          4000
+         7 aakash     kansara             2 16-NOV-08 anand      02698-254864          5500
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+3)
+
+SQL> select substr(first_name,1,1) from Class_Mate_2018;
+
+SUBS
+----
+a
+r
+s
+p
+k
+s
+a
+j
+k
+
+9 rows selected.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+4)
+
+SQL> select * from Class_Mate_2018 where BirthDate<'18-jan-1985';
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES
+---------- ---------- ---------- ---------- --------- ---------- --------------- ----------
+         5 kirti      pandya              1 01-APR-75 kapanvani  02692-288745          4000
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+5)
+
+SQL> select * from CLass_Mate_2018 where soundex('sumit')=soundex(First_name);
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES
+---------- ---------- ---------- ---------- --------- ---------- --------------- ----------
+         3 sumit      chaudhary           1 19-OCT-93 nadiad                           1500
+         6 sumeet     shah                4 27-FEB-86 kheda      02697-588245          7000
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+6)
+
+SQL> select * from Class_Mate_2018 order by Fgi asc;
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES
+---------- ---------- ---------- ---------- --------- ---------- --------------- ----------
+         5 kirti      pandya              1 01-APR-75 kapanvani  02692-288745          4000
+         3 sumit      chaudhary           1 19-OCT-93 nadiad                           1500
+         8 ji9nal     dave                2 08-DEC-90 anand                            5000
+         7 aakash     kansara             2 16-NOV-08 anand      02698-254864          5500
+         9 keyur      mehta               3 20-MAY-89 surat                            4500
+         2 roma       patel               3 27-OCT-87 anand      9995863527            3000
+         1 ashish     thakkar             3 06-JUN-00 ahemedbad  87888523689           2000
+         4 payal      patel               4 11-JUL-93 khambhat                         2500
+         6 sumeet     shah                4 27-FEB-86 kheda      02697-588245          7000
+
+9 rows selected.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+7)
+
+SQL> select *from Class_Mate_2018 where Mexpenses*1000 in (select Mexpenses from Friends_Group_2018 where Group_name in ('Studious'));
+
+no rows selected
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+9)
+
+SQL> select * from Class_Mate_2018 where Fgi in(select Fgi from Friends_Group_2018 where Group_name in ('Sports','Mischievous'));
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES
+---------- ---------- ---------- ---------- --------- ---------- --------------- ----------
+         1 ashish     thakkar             3 06-JUN-00 ahemedbad  87888523689           2000
+         2 roma       patel               3 27-OCT-87 anand      9995863527            3000
+         7 aakash     kansara             2 16-NOV-08 anand      02698-254864          5500
+         8 ji9nal     dave                2 08-DEC-90 anand                            5000
+         9 keyur      mehta               3 20-MAY-89 surat                            4500
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+10)
+
+SQL> select * from Class_Mate_2018 where Mexpenses>(select max(Mexpenses) from Class_Mate_2018 where Fgi=3);
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES
+---------- ---------- ---------- ---------- --------- ---------- --------------- ----------
+         6 sumeet     shah                4 27-FEB-86 kheda      02697-588245          7000
+         7 aakash     kansara             2 16-NOV-08 anand      02698-254864          5500
+         8 ji9nal     dave                2 08-DEC-90 anand                            5000
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+11)
+
+SQL> select sum(Mexpenses), Fgi from Class_Mate_2018 group by Fgi;
+
+SUM(MEXPENSES)        FGI
+-------------- ----------
+          5500          1
+         10500          2
+          9500          4
+          9500          3
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+12)
+
+SQL> create table Class_1 as select Cl,First_name,Last_name from Class_MAte_2018;
+
+Table created.
+
+SQL> select * from Class_1;
+
+        CL FIRST_NAME LAST_NAME
+---------- ---------- ----------
+         1 ashish     thakkar
+         2 roma       patel
+         3 sumit      chaudhary
+         4 payal      patel
+         5 kirti      pandya
+         6 sumeet     shah
+         7 aakash     kansara
+         8 ji9nal     dave
+         9 keyur      mehta
+
+9 rows selected.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+13)
+
+SQL> alter table Class_Mate_2018 modify(Cl number(10));
+
+Table altered.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+14)
+
+SQL> alter table Class_Mate_2018 add(address varchar2(40));
+
+Table altered.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+15)
+
+SQL> create view Cl_View as select * from Class_Mate_2018 where Mexpenses>3000;
+
+View created.
+
+SQL> select * from Cl_View;
+
+        CL FIRST_NAME LAST_NAME         FGI BIRTHDATE CITY       PHONE_NO         MEXPENSES ADDRESS
+---------- ---------- ---------- ---------- --------- ---------- --------------- ---------- ----------------------------------------
+         5 kirti      pandya              1 01-APR-75 kapanvani  02692-288745          4000
+         6 sumeet     shah                4 27-FEB-86 kheda      02697-588245          7000
+         7 aakash     kansara             2 16-NOV-08 anand      02698-254864          5500
+         8 ji9nal     dave                2 08-DEC-90 anand                            5000
+         9 keyur      mehta               3 20-MAY-89 surat                            4500
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+16)
+
+SQL> insert into Cl_View values('11','kajal','thakkar','2','7-nov-1984','surat','9089076325','2400','');
+
+1 row created.
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+8)
+
+SQL> select Friends_Group_2018.Fgi,Friends_Group_2018.Group_name,Friends_Group_2018.Description,Class_Mate_2018.Cl,Class_Mate_2018.BirthDate from Friends_Group_2018, Class_Mate_2018 where Friends_Group_2018.Fgi=Class_Mate_2018.Fgi;
+
+       FGI GROUP_NAME      DESCRIPTION                       CL BIRTHDATE
+---------- --------------- ------------------------- ---------- ---------
+         3 Mischievous     Always do Mischief                 1 06-JUN-00
+         3 Mischievous     Always do Mischief                 2 27-OCT-87
+         1 Studious        Very Intelligent Group             3 19-OCT-93
+         4 Easy Going      No Bother                          4 11-JUL-93
+         1 Studious        Very Intelligent Group             5 01-APR-75
+         4 Easy Going      No Bother                          6 27-FEB-86
+         2 Sports          Excellent in Sports                7 16-NOV-08
+         2 Sports          Excellent in Sports                8 08-DEC-90
+         3 Mischievous     Always do Mischief                 9 20-MAY-89
+         2 Sports          Excellent in Sports               11 07-NOV-84
+
+10 rows selected.
+
+-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
