@@ -1,0 +1,253 @@
+SQL> connect
+Enter user-name: system
+Enter password:
+Connected.
+SQL> create table RSM_Hospital_Database_18
+  2  (
+  3  Hospital_id varchar2(10)Primary key check (Hospital_id like 'H%'),
+  4  Name varchar2(40)not null,
+  5  Address varchar2(30),
+  6  city varchar2(10),
+  7  State varchar2(30)not null
+  8  );
+
+Table created.
+
+SQL> desc RSM_Hospital_Database_18;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ HOSPITAL_ID                               NOT NULL VARCHAR2(10)
+ NAME                                      NOT NULL VARCHAR2(40)
+ ADDRESS                                            VARCHAR2(30)
+ CITY                                               VARCHAR2(10)
+ STATE                                     NOT NULL VARCHAR2(30)
+
+SQL> insert into RSM_Hospital_Database_18 values ('&Hospital_id','&Name','&Address','&City','&State');
+Enter value for hospital_id: H1231
+Enter value for name: acharya cancer trt. insti.
+Enter value for address: pbm campus
+Enter value for city: bikaner
+Enter value for state: rajsthan
+old   1: insert into RSM_Hospital_Database_18 values ('&Hospital_id','&Name','&Address','&City','&State')
+new   1: insert into RSM_Hospital_Database_18 values ('H1231','acharya cancer trt. insti.','pbm campus','bikaner','rajsthan')
+
+1 row created.
+
+SQL> select * from RSM_Hospital_Database_18;
+
+HOSPITAL_I NAME                                     ADDRESS                        CITY       STATE
+---------- ---------------------------------------- ------------------------------ ---------- ------------------------------
+H1231      acharya cancer trt. insti.               pbm campus                     bikaner    rajsthan
+H4325      aiims                                                                   delhi      delhi
+H7654      actrec                                   sector22, utsav chowk          mumbai     maharashtra
+H8725      army medi. of india                                                     new delhi  delhi
+H7865      cachar cancer center                     ns avenue                      silchar    assam
+H0525      civil hospital                           d bk. mds off. asarva          ahmadabad  gujarat
+
+6 rows selected.
+
+
+SQL> create table RSM_Doctors_Database_18
+  2  (
+  3  Doctor_id varchar2(10)primary key check(Doctor_id like 'D%'),
+  4  Hospital_id varchar2(20)references RSM_Hospital_Database_18,
+  5  D_name varchar2(30)not null,
+  6  State varchar2(20),
+  7  Specialisation varchar2(30)not null,
+  8  Consulting_charge number(10)not null
+  9  );
+
+Table created.
+
+                                                                                                                                                     NOT NULL NUMBER(10)
+
+SQL> desc RSM_Doctors_Database_18;
+ Name                    Null?    Type
+ ----------------------- -------- ----------------
+ DOCTOR_ID               NOT NULL VARCHAR2(10)
+ HOSPITAL_ID                      VARCHAR2(20)
+ D_NAME                  NOT NULL VARCHAR2(30)
+ STATE                            VARCHAR2(20)
+ SPECIALISATION          NOT NULL VARCHAR2(30)
+ CONSULTING_CHARGE       NOT NULL NUMBER(10)
+
+
+
+
+SQL> insert into RSM_Doctors_Database_18 values ('&Doctor_id','&Hospital_id','&D_name','&State','&Specialisation','&Consulting_charge');
+Enter value for doctor_id: D4789
+Enter value for hospital_id: H4325
+Enter value for d_name: k k aggarwal
+Enter value for state: delhi
+Enter value for specialisation: cerdiologist
+Enter value for consulting_charge: 10200
+old   1: insert into RSM_Doctors_Database_18 values ('&Doctor_id','&Hospital_id','&D_name','&State','&Specialisation','&Consulting_charge')
+new   1: insert into RSM_Doctors_Database_18 values ('D4789','H4325','k k aggarwal','delhi','cerdiologist','10200')
+
+1 row created.
+
+
+SQL> select * from RSM_Doctors_Database_18;
+
+DOCTOR_ID  HOSPITAL_ID          D_NAME                         STATE                SPECIALISATION         CONSULTING_CHARGE
+---------- -------------------- ------------------------------ -------------------- ------------------------------ -----------------
+D4789      H4325                k k aggarwal                   delhi                cerdiologist                       10200
+D1611      H1231                indira nath                    rajsthan             immunologist                        2500
+D2702      H7865                nikhil tandon                  assam                endocrinologist                     7800
+D0106      H0525                sijata sharma                  gujarat              biophysist                          3500
+D0812      H8725                harsh mahajan                  delhi                radiologist                         6700
+D2704      H7654                arvind kumar                   maharashtra          surgeon                             8200
+
+6 rows selected.
+
+
+
+
+1.
+
+SQL> select D_name from RSM_Doctors_Database_18 where D_name like '_i%';
+
+D_NAME
+------------------------------
+nikhil tandon
+sijata sharma
+
+
+2.
+
+SQL> select Doctor_id,State,Specialisation from RSM_Doctors_Database_18 where State!='delhi';
+
+DOCTOR_ID  STATE                SPECIALISATION
+---------- -------------------- ------------------------------
+D1611      rajsthan             immunologist
+D2702      assam                endocrinologist
+D0106      gujarat              biophysist
+D2704      maharashtra          surgeon
+
+
+3.
+
+SQL> select count(Doctor_id) from RSM_Doctors_Database_18 where Consulting_charge<=8500;
+
+COUNT(DOCTOR_ID)
+----------------
+               5
+
+
+4.
+
+SQL> select * from RSM_Hospital_Database_18 where length(State)=7;
+
+HOSPITAL_I NAME                                     ADDRESS                        CITY       STATE
+---------- ---------------------------------------- ------------------------------ ---------- ------------------------------
+H0525      civil hospital                           d bk. mds off. asarva          ahmadabad  gujarat
+
+
+5.
+
+SQL> Select * from RSM_Doctors_Database_18;
+
+DOCTOR_ID  HOSPITAL_ID          D_NAME                         STATE                SPECIALISATION         CONSULTING_CHARGE
+---------- -------------------- ------------------------------ -------------------- ------------------------------ -----------------
+D4789      H4325                k k aggarwal                   delhi                cerdiologist                       10200
+D1611      H1231                indira nath                    rajsthan             immunologist                        2500
+D2702      H7865                nikhil tandon                  assam                endocrinologist                     7800
+D0106      H0525                sijata sharma                  gujarat              biophysist                          3500
+D0812      H8725                harsh mahajan                  delhi                radiologist                         6700
+D2704      H7654                arvind kumar                   maharashtra          surgeon                             8200
+
+6 rows selected.
+
+
+6.
+
+SQL> select * from RSM_Hospital_Database_18 where State='delhi' and City='delhi';
+
+HOSPITAL_I NAME                                     ADDRESS                        CITY       STATE
+---------- ---------------------------------------- ------------------------------ ---------- ------------------------------
+H4325      aiims                                                                   delhi      delhi
+
+
+
+7.
+
+SQL> select * from RSM_Hospital_Database_18 order by Hospital_id asc ;
+
+HOSPITAL_I NAME                                     ADDRESS                        CITY       STATE
+---------- ---------------------------------------- ------------------------------ ---------- ------------------------------
+H0525      civil hospital                           d bk. mds off. asarva          ahmadabad  gujarat
+H1231      acharya cancer trt. insti.               pbm campus                     bikaner    rajsthan
+H4325      aiims                                                                   delhi      delhi
+H7654      actrec                                   sector22, utsav chowk          mumbai     maharashtra
+H7865      cachar cancer center                     ns avenue                      silchar    assam
+H8725      army medi. of india                                                     new delhi  delhi
+
+6 rows selected.
+
+
+8.
+
+SQL> select Consulting_charge*0.2"commission" from RSM_Doctors_Database_18;
+
+commission
+----------
+      2040
+       500
+      1560
+       700
+      1340
+      1640
+
+6 rows selected.
+
+
+9.
+
+SQL> alter table RSM_Hospital_Database_18 add (Clinic_center varchar2(30));
+
+Table altered.
+
+SQL> update RSM_Hospital_Database_18 set Clinic_center=Name;
+
+6 rows updated.
+
+SQL> alter table RSM_Hospital_Database_18 drop column Name;
+
+Table altered.
+
+SQL> Select * from RSM_Hospital_Database_18;
+
+HOSPITAL_I ADDRESS                        CITY       STATE                          CLINIC_CENTER
+---------- ------------------------------ ---------- ------------------------------ ------------------------------
+H1231      pbm campus                     bikaner    rajsthan                       acharya cancer trt. insti.
+H4325                                     delhi      delhi                          aiims
+H7654      sector22, utsav chowk          mumbai     maharashtra                    actrec
+H8725                                     new delhi  delhi                          army medi. of india
+H7865      ns avenue                      silchar    assam                          cachar cancer center
+H0525      d bk. mds off. asarva          ahmadabad  gujarat                        civil hospital
+
+6 rows selected.
+
+
+10.
+
+SQL> create table Consult_information as select Doctor_id,D_name,Specialisation from RSM_Doctors_Database_18;
+
+Table created.
+
+SQL> select * from Consult_information;
+
+DOCTOR_ID  D_NAME                         SPECIALISATION
+---------- ------------------------------ ------------------------------
+D4789      k k aggarwal                   cerdiologist
+D1611      indira nath                    immunologist
+D2702      nikhil tandon                  endocrinologist
+D0106      sijata sharma                  biophysist
+D0812      harsh mahajan                  radiologist
+D2704      arvind kumar                   surgeon
+
+6 rows selected.
+
+SQL>
+
+

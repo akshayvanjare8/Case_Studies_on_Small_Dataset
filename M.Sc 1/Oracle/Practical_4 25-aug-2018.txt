@@ -1,0 +1,318 @@
+1.Find out the names of all the salesman.
+
+SQL> select salesman_name from export_salesman_master_2018;
+
+SALESMAN_NAME
+--------------------
+aman
+omkar
+raj
+ashish
+raman
+riya
+ridhima
+jigisha
+rajvir
+neha dave
+
+10 rows selected.
+
+
+=========================================================================
+
+2.Retrieve the entire contents of the sales_order
+
+SQL> select * from export_sales_order_2018;
+
+ORDER_ CLIENT ORDER_DAT SALESMAN_NO
+------ ------ --------- --------------------
+O19001 C00001 12-JUN-04 S00001
+O19002 C00002 25-JUN-04 S00002
+O46865 C00003 18-FEB-04 S00003
+O19003 C00001 03-APR-04 S00001
+O46866 C00004 20-MAY-04 S00002
+O19008 C00005 24-MAY-04 S00004
+O19009 C00002 25-MAY-05 S00005
+O19010 C00006 03-JUL-04 S00004
+O19011 C00008 07-AUG-05 S00007
+O19013 C00010 07-MAY-04 S00009
+
+10 rows selected.
+
+==========================================================================
+
+3.	Retrieve the list of names, city and state of the salesman.
+
+SQL> select salesman_name,city,state from export_salesman_master_2018;
+
+SALESMAN_NAME        CITY            STATE
+-------------------- --------------- --------------------
+aman                 pune            gujarat
+omkar                pune            gujarat
+raj                  pune            maharashtra
+ashish               pune            maharashtra
+raman                pune            gujarat
+riya                 pune            gujarat
+ridhima              pune            gujarat
+jigisha              pune            gujarat
+rajvir               pune
+neha dave            pune            gujarat
+
+10 rows selected.
+
+=====================================================================================
+
+4.	List out various product available 
+
+SQL> select production_no from export_product_master_2018;
+
+PRODUC
+------
+P00001
+P0345
+P07868
+P07885
+P07975
+P08865
+
+6 rows selected.
+
+=======================================================================================
+
+5.	List out the clients who are located in Delhi.
+
+SQL> select * from export_client_master_2018 where city='delhi';
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE  TELEPHONE
+---------- --------------- ---------- ---------- ----------
+C00007 sakshi pathak                                       delhi
+    110001 new delhi             1200          0
+
+=======================================================================================
+
+6.	Find out the name of salesmen who have a salary equal to rs. 3000
+
+SQL> select salesman_name from export_salesman_master_2018 where salamt='3000';
+
+no rows selected
+
+=======================================================================================
+
+7.	Change the city of client no ‘5’ to Bangalore
+
+SQL> update export_client_master_2018 set city='babglore' where client_no='C00005';
+
+1 row updated.
+
+=======================================================================================
+
+8.	Change the baldue to clientno’1’ to rs 1000
+
+SQL> update export_client_master_2018 set bal_due='1000' where client_no='C00006';
+
+1 row updated.
+
+=======================================================================================
+
+9.	Change the cost price of ‘P1 to rs 950
+
+SQL> update export_product_master_2018 set sell_price='950' where production_no='P00001';
+
+1 row updated.
+
+
+=========================================================================================
+
+10.	Chage the city  salesman aman to pune
+
+SQL> update export_salesman_master_2018 set city='pune' where salesman_name='aman';
+
+1 row updated.
+
+
+==========================================================================================
+
+
+11.	Add a column called ‘phone_no’ of data type’ number’ an size ‘10’ to the client_master
+
+SQL> alter table export_client_master_2018 add (phone_no number(10));
+
+Table altered.
+
+
+===========================================================================================
+
+
+12.	Change the size of sellprice column in export_product to 15,2
+
+SQL> alter table export_product_master_2018 modify (sell_price number(15,2));
+
+Table altered.
+
+===========================================================================================
+
+13.	List the names of all clients having ‘a’ as the second letter in their names
+
+SQL> select name  from export_client_master_2018 where name like '_a%';
+
+NAME
+--------------------
+vandana saitwal
+basu navindgi
+ravi shreedharan
+sakshi pathak
+ravti parekh
+nagin patel
+
+6 rows selected.
+
+============================================================================================
+
+14.	List the client who stay in a city whose first letter is ‘M’
+
+SQL> select * from export_client_master_2018 where city like 'm%';
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE  TELEPHONE   PHONE_NO
+---------- --------------- ---------- ---------- ---------- ----------
+C00002 vandana saitwal                                     madras
+    780001 tamil nadu               0      10000
+
+C00008 ravti parekh         santaram nagar                 madras
+    765887 tamil nadu            1000        800
+
+=============================================================================================
+
+15.	List all client who stay in ‘bangalore’ or ‘mangalore’
+
+SQL> select * from export_client_master_2018 where city in('babglore','manglore');
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE  TELEPHONE   PHONE_NO
+---------- --------------- ---------- ---------- ---------- ----------
+C00005 ravi shreedharan                                    babglore
+    100001                       2000      23450
+
+
+=============================================================================================
+
+16.	List all clients whose baldue is greater than value 10000
+
+SQL> select * from export_client_master_2018 where bal_due>10000;
+
+no rows selected
+
+=============================================================================================
+
+17.	List all information from the order table for orders places in the month of june
+
+SQL> select * from export_sales_order_2018 where to_char(order_date,'mon')='jun';
+
+ORDER_ CLIENT ORDER_DAT SALESMAN_NO
+------ ------ --------- --------------------
+O19001 C00001 12-JUN-04 S00001
+O19002 C00002 25-JUN-04 S00002
+
+
+=============================================================================================
+
+18.
+
+SQL> select * from export_client_master_2018 where client_no in ('C00001','C00002');
+
+CLIENT NAME                 ADDRESS1                       CITY               PINCODE STATE           BAL_DUE    PALDONE  TELEPHONE      PHONE_NO
+------ -------------------- ------------------------------ --------------- ---------- --------------- ---------- ---------- ---------- ----------
+C00001 ivan bayross         santaram sociity               bombay              400054 maharashtra        1000      20000
+C00002 vandana saitwal                                     madras              780001 tamil nadu            0      10000
+
+============================================================================================================================================================
+
+19.
+
+SQL> select * from export_product_master_2018 where sell_price>500 and sell_price<=750;
+
+PRODUC PROFIT_PERCENT UNIT_MEASU  QTVONHAND  REODERLVL SELL_PRICE COST_PRICE
+------ -------------- ---------- ---------- ---------- ---------- ----------
+P07885            2.5 piece              80         30        700        450
+
+
+==============================================================================================================================================================
+
+20.
+
+SQL> select * from export_product_master_2018 where sell_price>500;
+
+PRODUC PROFIT_PERCENT UNIT_MEASU  QTVONHAND  REODERLVL SELL_PRICE COST_PRICE
+------ -------------- ---------- ---------- ---------- ---------- ----------
+P00001              5 piece             200         50        950        250
+P07868              2 piece             150         50        850        550
+P07885            2.5 piece              80         30        700        450
+
+SQL> select sell_price*15"new_price" from export_product_master_2018;
+
+ new_price
+----------
+     14250
+      7500
+     12750
+     10500
+      4500
+      6750
+
+6 rows selected.
+
+====================================================================================================
+
+21.
+
+SQL> select name,city,state from export_client_master_2018 where state not in ('maharashtra');
+
+NAME                 CITY            STATE
+-------------------- --------------- ---------------
+vandana saitwal      madras          tamil nadu
+sakshi pathak        delhi           new delhi
+ravti parekh         madras          tamil nadu
+nagin patel          anand           gujarat
+kripa gupta          nadiad          gujarat
+
+=======================================================================================================
+
+22.
+
+SQL> select count(order_no) from export_sales_order_2018;
+
+COUNT(ORDER_NO)
+---------------
+             10
+
+=========================================================================================================
+
+23.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

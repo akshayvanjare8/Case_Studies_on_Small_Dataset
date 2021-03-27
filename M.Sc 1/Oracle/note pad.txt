@@ -1,0 +1,396 @@
+SQL> create table export_client_master_2018
+  2  (
+  3  client_no varchar2(6)primary key check (client_no like 'C%'),
+  4  name varchar2(20)not null,
+  5  address1 varchar2(30),
+  6  city varchar2(15),
+  7  pincode number(8),
+  8  state varchar2(15),
+  9  bal_due number(10,2),
+ 10  paldone number(10,2)
+ 11  );
+
+Table created.
+
+SQL> desc export_client_master_2018;
+
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CLIENT_NO                                 NOT NULL VARCHAR2(6)
+ NAME                                      NOT NULL VARCHAR2(20)
+ ADDRESS1                                           VARCHAR2(30)
+ CITY                                               VARCHAR2(15)
+ PINCODE                                            NUMBER(8)
+ STATE                                              VARCHAR2(15)
+ BAL_DUE                                            NUMBER(10,2)
+ PALDONE                                            NUMBER(10,2)
+
+SQL> insert into export_client_master_2018 values ('&client_no','&name','&address1','&city','&pincode','&state','&bal_due','&pavdone');
+Enter value for client_no: C00001
+Enter value for name: ivan bayross
+Enter value for address1: santaram sociity
+Enter value for city: bombay
+Enter value for pincode: 400054
+Enter value for state: maharashtra
+Enter value for bal_due: 15000
+Enter value for pavdone: 20000
+old   1: insert into export_client_master_2018 values ('&client_no','&name','&address1','&city','&pincode','&state','&bal_due','&pavdone')
+new   1: insert into export_client_master_2018 values ('C00001','ivan bayross','santaram sociity','bombay','400054','maharashtra','15000','20000')
+
+1 row created.
+
+SQL> select * from export_client_master_2018;
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE
+---------- --------------- ---------- ----------
+C00001 ivan bayross         santaram sociity               bombay
+    400054 maharashtra          15000      20000
+
+C00002 vandana saitwal                                     madras
+    780001 tamil nadu               0      10000
+
+C00003 pramada jaguste                                     bombay
+    400057 maharashtra           5000       1200
+
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE
+---------- --------------- ---------- ----------
+C00004 basu navindgi                                       bombay
+    400056 maharashtra              0      12300
+
+C00005 ravi shreedharan                                    delhi
+    100001                       2000      23450
+
+C00006 rukmini                                             bombay
+    400050 maharashtra              0      15000
+
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE
+---------- --------------- ---------- ----------
+C00007 sakshi pathak                                       delhi
+    110001 new delhi             1200          0
+
+C00008 ravti parekh         santaram nagar                 madras
+    765887 tamil nadu            1000        800
+
+C00009 nagin patel          hari krupa society             anand
+    388120 gujarat               2000       1200
+
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE
+---------- --------------- ---------- ----------
+C00010 kripa gupta                                         nadiad
+    455120 gujarat               2300       1500
+
+
+10 rows selected.
+
+====================================================================================================================
+
+SQL> create table export_product_master_2018
+  2  (
+  3  production_no varchar2(6)primary key check (production_no like 'P%'),
+  4  profit_percent number(4,2)not null,
+  5  unit_measure varchar2(10)not null,
+  6  qtvonhand number(8)not null,
+  7  reoderlvl number(8)not null,
+  8  sell_price number(8,2)not null,
+  9  cost_price number(8,2)not null
+ 10  );
+
+Table created.
+
+SQL> desc export_product_master_2018;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PRODUCTION_NO                             NOT NULL VARCHAR2(6)
+ PROFIT_PERCENT                            NOT NULL NUMBER(4,2)
+ UNIT_MEASURE                              NOT NULL VARCHAR2(10)
+ QTVONHAND                                 NOT NULL NUMBER(8)
+ REODERLVL                                 NOT NULL NUMBER(8)
+ SELL_PRICE                                NOT NULL NUMBER(8,2)
+ COST_PRICE                                NOT NULL NUMBER(8,2)
+
+SQL> insert into export_product_master_2018 values ('&production_no','&profit_percent','&unit_measure','&qtvonhand','&reoderlvl','&sell_price','&cost_price');
+Enter value for production_no: P00001
+Enter value for profit_percent: 5
+Enter value for unit_measure: piece
+Enter value for qtvonhand: 200
+Enter value for reoderlvl: 50
+Enter value for sell_price: 350
+Enter value for cost_price: 250
+old   1: insert into export_product_master_2018 values ('&production_no','&profit_percent','&unit_measure','&qtvonhand','&reoderlvl','&sell_price','&cost_price')
+new   1: insert into export_product_master_2018 values ('P00001','5','piece','200','50','350','250')
+
+1 row created.
+
+SQL> select * from export_product_master_2018;
+
+PRODUC PROFIT_PERCENT UNIT_MEASU  QTVONHAND  REODERLVL SELL_PRICE COST_PRICE
+------ -------------- ---------- ---------- ---------- ---------- ----------
+P00001              5 piece             200         50        350        250
+P0345               6 piece             150         50        500        350
+P06734              5 piece             100         20        600        450
+P07865              5 piece             100         20        750        500
+P07868              2 piece             150         50        850        550
+P07885            2.5 piece              80         30        700        450
+P07965              4 piece             100         40        350        250
+P07975              5 piece              70         30        300        175
+P08865              5 piece              75         30        450        300
+
+9 rows selected.
+
+================================================================================================================================================================================
+SQL> create table export_salesman_master_2018
+  2  (
+  3  salesman_no varchar2(6)primary key check (salesman_no like 'S%'),
+  4  salesman_name varchar2(20)not null,
+  5  address varchar2(30),
+  6  city varchar2(15),
+  7  pincode number(8),
+  8  state varchar2(20),
+  9  salamt number(8,2)
+ 10  );
+
+Table created.
+
+SQL> desc export_salesman_master_2018;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SALESMAN_NO                               NOT NULL VARCHAR2(6)
+ SALESMAN_NAME                             NOT NULL VARCHAR2(20)
+ ADDRESS                                            VARCHAR2(30)
+ CITY                                               VARCHAR2(15)
+ PINCODE                                            NUMBER(8)
+ STATE                                              VARCHAR2(20)
+ SALAMT                                             NUMBER(8,2)
+
+SQL> insert into export_salesman_master_2018 values ('&salesman_no','&salesman_name','&address','&city','&pincode','&state','&salamt');
+Enter value for salesman_no: S00001
+Enter value for salesman_name: aman
+Enter value for address: a/14
+Enter value for city: ahmadabad
+Enter value for pincode: 388982
+Enter value for state: gujarat
+Enter value for salamt: 10000
+old   1: insert into export_salesman_master_2018 values ('&salesman_no','&salesman_name','&address','&city','&pincode','&state','&salamt')
+new   1: insert into export_salesman_master_2018 values ('S00001','aman','a/14','ahmadabad','388982','gujarat','10000')
+
+1 row created.
+
+SQL> select * from export_salesman_master_2018;
+
+SALESM SALESMAN_NAME        ADDRESS                        CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE                    SALAMT
+---------- -------------------- ----------
+S00001 aman                 a/14                           ahmadabad
+    388982 gujarat                   10000
+
+S00002 omkar                65                             godhara
+    388765 gujarat                   25000
+
+S00003 raj                  p-7                            mumbai
+    400032 maharashtra               15000
+
+
+SALESM SALESMAN_NAME        ADDRESS                        CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE                    SALAMT
+---------- -------------------- ----------
+S00004 ashish               a/5                            mumbai
+    400044 maharashtra               20000
+
+S00005 raman                c/6                            vadodara
+    344540 gujarat                   18000
+
+S00006 riya                 ridhhi society                 vvnagar
+    388001 gujarat                   14000
+
+
+SALESM SALESMAN_NAME        ADDRESS                        CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE                    SALAMT
+---------- -------------------- ----------
+S00007 ridhima              8/d1                           surat
+    644520 gujarat                   20000
+
+S00008 jigisha                                             nadiad
+    433120 gujarat                   15000
+
+S00009 rajvir
+
+
+
+SALESM SALESMAN_NAME        ADDRESS                        CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE                    SALAMT
+---------- -------------------- ----------
+S0010  neha dave                                           ahemadabad
+    388980 gujarat                   15000
+
+
+10 rows selected.
+
+==========================================================================================
+
+SQL> create table export_sales_order_2018
+  2  (
+  3  order_no varchar2(6)primary key check (order_no like 'O%'),
+  4  client_no varchar2(6)references export_client_master_2018,
+  5  order_date date not null,
+  6  salesman_no varchar(2)references export_salesman_master_2018
+  7  );
+
+Table created.
+
+SQL> desc export_sales_order_2018;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ---------------------
+ ORDER_NO                                  NOT NULL VARCHAR2(6)
+ CLIENT_NO                                          VARCHAR2(6)
+ ORDER_DATE                                NOT NULL DATE
+ SALESMAN_NO                                        VARCHAR2(2)
+
+SQL> commit;
+
+Commit complete.
+
+SQL> alter table export_sales_order_2018 modify (salesman_no varchar2(20));
+
+Table altered.
+
+SQL> insert into export_sales_order_2018 values ('&order_no','&client_no','&order_date','&salesman_no');
+Enter value for order_no: O19001
+Enter value for client_no: C00001
+Enter value for order_date: 12-JUNE-04
+Enter value for salesman_no: S00001
+old   1: insert into export_sales_order_2018 values ('&order_no','&client_no','&order_date','&salesman_no')
+new   1: insert into export_sales_order_2018 values ('O19001','C00001','12-JUNE-04','S00001')
+
+1 row created.
+
+SQL> select * from export_sales_order_2018;
+
+ORDER_ CLIENT ORDER_DAT SALESMAN_NO
+------ ------ --------- --------------------
+O19001 C00001 12-JUN-04 S00001
+O19002 C00002 25-JUN-04 S00002
+O46865 C00003 18-FEB-04 S00003
+O19003 C00001 03-APR-04 S00001
+O46866 C00004 20-MAY-04 S00002
+O19008 C00005 24-MAY-04 S00004
+O19009 C00002 25-MAY-05 S00005
+O19010 C00006 03-JUL-04 S00004
+O19011 C00008 07-AUG-05 S00007
+O19013 C00010 07-MAY-04 S00009
+
+10 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+=======================================
+1.
+
+SQL> select name from export_client_master_2018;
+
+NAME
+--------------------
+ivan bayross
+vandana saitwal
+pramada jaguste
+basu navindgi
+ravi shreedharan
+rukmini
+sakshi pathak
+ravti parekh
+nagin patel
+kripa gupta
+
+10 rows selected.
+
+
+4.
+
+SQL> update export_client_master_2018 set city='banglore' where client_no='C00005';
+
+1 row updated.
+
+SQL> select * from export_client_master_2018;
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE
+---------- --------------- ---------- ----------
+C00001 ivan bayross         santaram sociity               bombay
+    400054 maharashtra          15000      20000
+
+C00002 vandana saitwal                                     madras
+    780001 tamil nadu               0      10000
+
+C00003 pramada jaguste                                     bombay
+    400057 maharashtra           5000       1200
+
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE
+---------- --------------- ---------- ----------
+C00004 basu navindgi                                       bombay
+    400056 maharashtra              0      12300
+
+C00005 ravi shreedharan                                    banglore
+    100001                       2000      23450
+
+C00006 rukmini                                             bombay
+    400050 maharashtra              0      15000
+
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE
+---------- --------------- ---------- ----------
+C00007 sakshi pathak                                       delhi
+    110001 new delhi             1200          0
+
+C00008 ravti parekh         santaram nagar                 madras
+    765887 tamil nadu            1000        800
+
+C00009 nagin patel          hari krupa society             anand
+    388120 gujarat               2000       1200
+
+
+CLIENT NAME                 ADDRESS1                       CITY
+------ -------------------- ------------------------------ ---------------
+   PINCODE STATE              BAL_DUE    PALDONE
+---------- --------------- ---------- ----------
+C00010 kripa gupta                                         nadiad
+    455120 gujarat               2300       1500
+
+
+10 rows selected.
+
+SQL>
+
+SQL> update export_client_master_2018 set bal_due='1000' where client_no='C00001';
+
+1 row updated.
+
+SQL> update export_salesman_master_2018 set city='pune' where salesman_no='S00003';
+
+1 row updated.
+
+SQL>
+
+

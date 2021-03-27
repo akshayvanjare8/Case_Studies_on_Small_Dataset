@@ -1,0 +1,325 @@
+
+
+SQL> insert into rto_license_2018 values('&license_number','&license_date','&owner_name','&age','&payment_made','&gender');
+Enter value for license_number: A12345678
+Enter value for license_date: 15-Aug_2008
+Enter value for owner_name: Amit
+Enter value for age: 18
+Enter value for payment_made: 1200
+Enter value for gender: M
+old   1: insert into rto_license_2018 values('&license_number','&license_date','&owner_name','&age','&payment_made','&gender')
+new   1: insert into rto_license_2018 values('A12345678','15-Aug_2008','Amit','18','1200','M')
+
+1 row created.
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from rto_license_2018;
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+A12345678  15-AUG-08 Amit                              18         1200 M
+B12345678  15-AUG-08 Anand                             20         1200 M
+C12345678  14-AUG-08 Ashok                             21              M
+A23456789  13-AUG-08 Aman                              19              M
+B23456789  23-AUG-08 arpit                             20         1500
+A34567890  24-AUG-08 Ameet                             21         1350 M
+C34567890  24-AUG-08 Amit                              30              M
+
+7 rows selected.
+========================================================================================
+SQL> select license_number,owner_name from rto_license_2018;
+
+LICENSE_NU OWNER_NAME
+---------- -------------------------
+A12345678  Amit
+B12345678  Anand
+C12345678  Ashok
+A23456789  Aman
+B23456789  arpit
+A34567890  Ameet
+C34567890  Amit
+
+7 rows selected.
+=========================================================================================
+
+SQL> select * from rto_license_2018 where length(owner_name)=5;
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+B12345678  15-AUG-08 Anand                             20         1200 M
+
+
+C12345678  14-AUG-08 Ashok                             21              M
+
+
+B23456789  23-AUG-08 arpit                             20         1500
+
+
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A34567890  24-AUG-08 Ameet                             21         1350 M
+
+===========================================================================================
+
+SQL> select * from rto_license_2018;
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+B12345678  15-AUG-08 Anand                             20         1200 M
+
+
+C12345678  14-AUG-08 Ashok                             21              M
+
+
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A23456789  13-AUG-08 Aman                              19              M
+
+
+B23456789  23-AUG-08 arpit                             20         1500
+
+
+A34567890  24-AUG-08 Ameet                             21         1350 M
+
+
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+C34567890  24-AUG-08 Amit                              30              M
+
+
+
+7 rows selected.
+============================================================================================
+
+SQL> select * from rto_license_2018 where length(owner_name)=4;
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+A23456789  13-AUG-08 Aman                              19              M
+
+
+C34567890  24-AUG-08 Amit                              30              M
+
+==============================================================================================
+
+
+SQL> select * from rto_license_2018 where license_number like 'A%';
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+A23456789  13-AUG-08 Aman                              19              M
+
+
+A34567890  24-AUG-08 Ameet                             21         1350 M
+
+================================================================================================
+
+SQL> select * from rto_license_2018 where license_number like '_1%';
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+B12345678  15-AUG-08 Anand                             20         1200 M
+
+
+C12345678  14-AUG-08 Ashok                             21              M
+
+==================================================================================================
+
+SQL> select * from rto_license_2018 where license_date>'13-Aug-2008';
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+B12345678  15-AUG-08 Anand                             20         1200 M
+
+
+C12345678  14-AUG-08 Ashok                             21              M
+
+
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+B23456789  23-AUG-08 arpit                             20         1500
+
+
+A34567890  24-AUG-08 Ameet                             21         1350 M
+
+
+C34567890  24-AUG-08 Amit                              30              M
+
+
+
+6 rows selected.
+
+
+==================================================================================================
+SQL> select * from rto_license_2018 where soundex('amit')=soundex(owner_name);
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+A34567890  24-AUG-08 Ameet                             21         1350 M
+
+
+C34567890  24-AUG-08 Amit                              30              M
+
+
+=====================================================================================================
+SQL> select * from rto_license_2018 where payment_made>0;
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+B12345678  15-AUG-08 Anand                             20         1200 M
+
+
+B23456789  23-AUG-08 arpit                             20         1500
+
+
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A34567890  24-AUG-08 Ameet                             21         1350 M
+
+==============================================================================================
+SQL> select * from rto_license_2018 where license_date='24-Aug-2008';
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A34567890  24-AUG-08 Ameet                             21         1350 M
+
+
+C34567890  24-AUG-08 Amit                              30              M
+
+
+
+==============================================================================================
+SQL> select * from rto_license_2018 where license_date<'24-Aug-2008';
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+B12345678  15-AUG-08 Anand                             20         1200 M
+
+
+C12345678  14-AUG-08 Ashok                             21              M
+
+
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A23456789  13-AUG-08 Aman                              19              M
+
+
+B23456789  23-AUG-08 arpit                             20         1500
+
+
+===============================================================================================
+SQL> alter table rto_license_2018 add(city varchar2(15) default 'Anand');
+===============================================================================================
+
+
+SQL> alter table rto_license_2018 add (city varchar2(15));
+
+Table altered.
+
+SQL> select *  from rto_license_2018;
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A12345678  15-AUG-08 Amit                              18         1200 M
+
+
+B12345678  15-AUG-08 Anand                             20         1200 M
+
+
+C12345678  14-AUG-08 Ashok                             21              M
+
+
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+A23456789  13-AUG-08 Aman                              19              M
+
+
+B23456789  23-AUG-08 arpit                             20         1500
+
+
+A34567890  24-AUG-08 Ameet                             21         1350 M
+
+
+
+LICENSE_NU LICENSE_D OWNER_NAME                       AGE PAYMENT_MADE GENDE
+---------- --------- ------------------------- ---------- ------------ -----
+CITY
+---------------
+C34567890  24-AUG-08 Amit                              30              M
+
+
+
+7 rows selected.
+
+SQL>

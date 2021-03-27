@@ -1,0 +1,108 @@
+SQL> create table department_1_18
+  2  (
+  3  dept_no number(5)primary key,
+  4  dept_name varchar2(10)
+  5  );
+
+Table created.
+
+SQL> insert into department_1_18 values ('&dept_no','&dept_name');
+Enter value for dept_no: 1
+Enter value for dept_name: sales
+old   1: insert into department_1_18 values ('&dept_no','&dept_name')
+new   1: insert into department_1_18 values ('1','sales')
+
+1 row created.
+
+
+SQL> select * from department_1_18;
+
+   DEPT_NO DEPT_NAME
+---------- ----------
+         1 sales
+         2 mkt
+         3 hr
+         4 mgt
+         5 finance
+
+
+SQL> create table employee_1_18
+  2  (
+  3  emp_id number(5),
+  4  emp_name varchar2(20),
+  5  dept_no number(5)references department_1_18,
+  6  salary number(10),
+  7  designation varchar2(20)
+  8  );
+
+Table created.
+
+
+SQL> insert into employee_1_18 values('&emp_id','&emp_name','&dept_no','&salary','&designation');
+Enter value for emp_id: 1
+Enter value for emp_name: anu
+Enter value for dept_no: 1
+Enter value for salary: 20000
+Enter value for designation: ceo
+old   1: insert into employee_1_18 values('&emp_id','&emp_name','&dept_no','&salary','&designation')
+new   1: insert into employee_1_18 values('1','anu','1','20000','ceo')
+
+1 row created.
+
+
+SQL> select * from employee_1_18;
+
+    EMP_ID EMP_NAME                DEPT_NO     SALARY DESIGNATION
+---------- -------------------- ---------- ---------- --------------------
+         1 anu                           1      20000 ceo
+         2 roma                          2      10000 sp
+         3 anil                          1       5000 jr. marketer
+         4 karan                         2       8000 sales ex
+         5 mehul                         3      15000 officer
+         6 nisha                         4       7000 sr. marketer
+         7 sen                           5       9000 recruiter
+
+7 rows selected.
+
+=============================================
+
+1.
+
+SQL> select emp_name from employee_1_18 where dept_no in (select dept_no from department_1_18 where dept_name in ('hr','sales'));
+
+EMP_NAME
+--------------------
+anu
+anil
+mehul
+
+
+============================================
+
+2.
+
+SQL> select emp_name from employee_1_18 where dept_no in (select dept_no from employee_1_18 where emp_name in ('anil','karan'));
+
+EMP_NAME
+--------------------
+anil
+anu
+karan
+roma
+
+
+============================================
+
+3.
+
+SQL> select count(emp_id),sum(salary) from employee_1_18 where dept_no=2;
+
+COUNT(EMP_ID) SUM(SALARY)
+------------- -----------
+            2       18000
+
+===========================================
+
+4.
+
+

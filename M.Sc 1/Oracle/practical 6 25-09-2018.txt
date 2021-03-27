@@ -1,0 +1,546 @@
+SQL> create table msc_asqpm
+  2  (
+  3  student_id varchar2(10)primary key check(student_id like 'S%'),
+  4  student_name varchar2(20)not null,
+  5  sex varchar2(5) check(sex in ('F','M')),
+  6  address varchar2(30),
+  7  city varchar2(10)not null,
+  8  pincode numeric(10),
+  9  mobile_no number(10),
+ 10  graduation_course varchar2(10)not null,
+ 11  fees_pay number(10)
+ 12  );
+
+Table created.
+
+SQL> desc msc_asqpm;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ---------------------------
+ STUDENT_ID                                NOT NULL VARCHAR2(10)
+ STUDENT_NAME                              NOT NULL VARCHAR2(20)
+ SEX                                                VARCHAR2(5)
+ ADDRESS                                            VARCHAR2(30)
+ CITY                                      NOT NULL VARCHAR2(10)
+ PINCODE                                            NUMBER(10)
+ MOBILE_NO                                          NUMBER(10)
+ GRADUATION_COURSE                         NOT NULL VARCHAR2(10)
+ FEES_PAY                                           NUMBER(10)
+
+
+SQL> insert into msc_asqpm values ('&student_id','&student_name','&sex','&address','&city','&pincode','&mobile_no','&graduation_course','&fees_pay');
+Enter value for student_id: S1001
+Enter value for student_name: aatish shah
+Enter value for sex: M
+Enter value for address: near jain derasar
+Enter value for city: khambhat
+Enter value for pincode: 388580
+Enter value for mobile_no: 9586346962
+Enter value for graduation_course: bba
+Enter value for fees_pay: 22000
+old   1: insert into msc_asqpm values ('&student_id','&student_name','&sex','&address','&city','&pincode','&mobile_no','&graduation_course','&fees_pay')
+new   1: insert into msc_asqpm values ('S1001','aatish shah','M','near jain derasar','khambhat','388580','9586346962','bba','22000')
+
+1 row created.
+
+
+SQL> select * from msc_asqpm;
+
+STUDENT_ID STUDENT_NAME         SEX   ADDRESS                        CITY          PINCODE  MOBILE_NO GRADUATION   FEES_PAY
+---------- -------------------- ----- ------------------------------ ---------- ---------- ---------- ---------- ----------
+S1001      aatish shah          M     near jain derasar              khambhat       388580 9586346962 bba             22000
+S1212      diwan asifsha        M     diwan faliyu near bus stop     ahmedabad      366120 8460253067 bcom            20000
+S1324      mikesh prajapati     M     ramkrushna ganj                vadodra        366210 8886521340 be              22000
+S1002      priyanka patel       F     rajpath near saibaba mandir    anand          388120 6663421764 bba             20000
+S1451      akash shah           M     luharvada, nadiyadi darwaja    Mahemdabad            9408724163 bcom            20000
+S3421      harijitsingh bagga   M     satellite road                 ahmedabad      366119 7821345367 bsc             15000
+S6532      meera patel          F     vriadvan chock                 rajkot         366452 8885432341 bba             20000
+S5831      ruhi trivedi         F     radha krishna                  vvnagar        388001 9994532314 be              20000
+S1521      vraj patel           M     21, shiva near 80 feet road    valsad        3888661 7773421654 bcom            10000
+S1920      pari rajput          F     ramnuj park                    vvnagar        388001 8885643231 bba             15000
+
+10 rows selected.
+
+
+
+SQL> create table project_details_asqpm
+  2  (
+  3  students_id varchar2(10)references msc_asqpm,
+  4  project_specialisation varchar2(10)not null,
+  5  project_company varchar2(20)not null,
+  6  project_mentor varchar2(20),
+  7  reporting_date date,
+  8  project_status varchar2(20) check(project_status in ('in_process','finished','reject','rework'))
+  9  );
+
+Table created.
+
+
+SQL> desc project_details_asqpm;
+ Name                    Null?    Type
+ ----------------------- -------- ----------------
+ STUDENTS_ID                      VARCHAR2(10)
+ PROJECT_SPECIALISATION  NOT NULL VARCHAR2(10)
+ PROJECT_COMPANY         NOT NULL VARCHAR2(20)
+ PROJECT_MENTOR                   VARCHAR2(20)
+ REPORTING_DATE                   DATE
+ PROJECT_STATUS                   VARCHAR2(20)
+
+
+
+
+SQL> insert into project_details_asqpm values ('&student_is','&project_specialisation','&project_company','&project_mentor','&reporting_date','&projrct_status');
+Enter value for student_is: S1002
+Enter value for project_specialisation: marketing reaserch
+Enter value for project_company: neilsen
+Enter value for project_mentor: ms. kalpana shah
+Enter value for reporting_date: 01-jan-2016
+Enter value for projrct_status: in_process
+old   1: insert into project_details_asqpm values ('&student_is','&project_specialisation','&project_company','&project_mentor','&reporting_date','&projrct_status')
+new   1: insert into project_details_asqpm values ('S1002','marketing reaserch','neilsen','ms. kalpana shah','01-jan-2016','in_process')
+
+1 row created.
+
+
+SQL> alter table project_details_asqpm modify (project_specialisation varchar2(30));
+
+Table altered.
+
+SQL> alter table project_details_asqpm modify (project_company varchar2(30));
+
+Table altered.
+
+
+SQL> select * from project_details_asqpm;
+
+STUDENTS_I PROJECT_SPECIALISATION         PROJECT_COMPANY                PROJECT_MENTOR       REPORTING PROJECT_STATUS
+---------- ------------------------------ ------------------------------ -------------------- --------- --------------------
+S1001      six sigma                      amul                           pro. anuj patel      02-DEC-15 in_process
+S1212      iso                            manorial association           mr. vedant vyas      15-DEC-15 in_process
+S1324      six sigma                      vidya wires                    mrs. pridhi desai    12-JAN-16 reject
+S1451      iso                            gqs                            pro. rachna trivedi  21-DEC-15 in_process
+S1002      marketing reaserch             neilsen                        ms. kalpana shah     01-JAN-16 in_process
+S5831      six sigma                      iqr consultancy                mrs. pridhi desai    31-JAN-16 rework
+S3421      finace management              state bank india               mr. rahul parmar     22-FEB-16 in_process
+S1521      marketing management           iqr consultancy                pro. pinakin gochar  19-MAR-16 finished
+S6532      iso                            punyam consultancy             ms. devanshi vohra   21-APR-16 finished
+S1920      six sigma                      prescribe plastic house        prof. alap patel     26-DEC-15 rework
+
+10 rows selected.
+
+=============================================================================================================================================
+
+1.
+
+
+SQL> select student_name,graduation_course from msc_asqpm;
+
+STUDENT_NAME         GRADUATION
+-------------------- ----------
+aatish shah          bba
+diwan asifsha        bcom
+mikesh prajapati     be
+priyanka patel       bba
+akash shah           bcom
+harijitsingh bagga   bsc
+meera patel          bba
+ruhi trivedi         be
+vraj patel           bcom
+pari rajput          bba
+
+10 rows selected.
+
+===================================================================================
+2.
+
+SQL> desc msc_asqpm;
+ Name                    Null?    Type
+ ----------------------- -------- ----------------
+ STUDENT_ID              NOT NULL VARCHAR2(10)
+ STUDENT_NAME            NOT NULL VARCHAR2(20)
+ SEX                              VARCHAR2(5)
+ ADDRESS                          VARCHAR2(30)
+ CITY                    NOT NULL VARCHAR2(10)
+ PINCODE                          NUMBER(10)
+ MOBILE_NO                        NUMBER(10)
+ GRADUATION_COURSE       NOT NULL VARCHAR2(10)
+ FEES_PAY                         NUMBER(10)
+
+SQL> desc project_details_asqpm;
+ Name                    Null?    Type
+ ----------------------- -------- ----------------
+ STUDENTS_ID                      VARCHAR2(10)
+ PROJECT_SPECIALISATION  NOT NULL VARCHAR2(30)
+ PROJECT_COMPANY         NOT NULL VARCHAR2(30)
+ PROJECT_MENTOR                   VARCHAR2(20)
+ REPORTING_DATE                   DATE
+ PROJECT_STATUS                   VARCHAR2(20)
+
+==========================================================================
+3.
+
+SQL> select project_specialisation from project_details_asqpm;
+
+PROJECT_SPECIALISATION
+------------------------------
+six sigma
+iso
+six sigma
+iso
+marketing reaserch
+six sigma
+finace management
+marketing management
+iso
+six sigma
+
+10 rows selected.
+
+=============================================
+
+4.
+
+SQL> select * from msc_asqpm where student_name like 'a%';
+
+STUDENT_ID STUDENT_NAME         SEX   ADDRESS                        CITY          PINCODE  MOBILE_NO GRADUATION   FEES_PAY
+---------- -------------------- ----- ------------------------------ ---------- ---------- ---------- ---------- ----------
+S1001      aatish shah          M     near jain derasar              khambhat       388580 9586346962 bba             22000
+S1451      akash shah           M     luharvada, nadiyadi darwaja    Mahemdabad            9408724163 bcom            20000
+
+==================================================
+
+5.
+
+SQL> select * from project_details_asqpm;
+
+STUDENTS_I PROJECT_SPECIALISATION         PROJECT_COMPANY                PROJECT_MENTOR       REPORTING PROJECT_STATUS
+---------- ------------------------------ ------------------------------ -------------------- --------- --------------------
+S1001      six sigma                      amul                           pro. anuj patel      02-DEC-15 in_process
+S1212      iso                            manorial association           mr. vedant vyas      26-DEC-15 in_process
+S1324      six sigma                      vidya wires                    mrs. pridhi desai    12-JAN-16 reject
+S1451      iso                            gqs                            pro. rachna trivedi  26-DEC-15 in_process
+S1002      marketing reaserch             neilsen                        ms. kalpana shah     01-JAN-16 in_process
+S5831      six sigma                      iqr consultancy                mrs. pridhi desai    31-JAN-16 rework
+S3421      finace management              state bank india               mr. rahul parmar     22-FEB-16 in_process
+S1521      marketing management           iqr consultancy                pro. pinakin gochar  19-MAR-16 finished
+S6532      iso                            punyam consultancy             ms. devanshi vohra   26-DEC-15 finished
+S1920      six sigma                      prescribe plastic house        prof. alap patel     26-DEC-15 rework
+
+10 rows selected.
+
+
+============================================
+6.
+
+SQL> select * from project_details_asqpm where project_company like '_q%';
+
+STUDENTS_I PROJECT_SPECIALISATION         PROJECT_COMPANY                PROJECT_MENTOR       REPORTING PROJECT_STATUS
+---------- ------------------------------ ------------------------------ -------------------- --------- --------------------
+S1451      iso                            gqs                            pro. rachna trivedi  21-DEC-15 in_process
+S5831      six sigma                      iqr consultancy                mrs. pridhi desai    31-JAN-16 rework
+S1521      marketing management           iqr consultancy                pro. pinakin gochar  19-MAR-16 finished
+
+================================================
+
+7.
+
+SQL> create table project1_data_IV as select students_id,project_specialisation,project_company,project_mentor from project_details_asqpm;
+
+Table created.
+
+SQL> select * from project1_data_IV;
+
+STUDENTS_I PROJECT_SPECIALISATION         PROJECT_COMPANY                PROJECT_MENTOR
+---------- ------------------------------ ------------------------------ --------------------
+S1001      six sigma                      amul                           pro. anuj patel
+S1212      iso                            manorial association           mr. vedant vyas
+S1324      six sigma                      vidya wires                    mrs. pridhi desai
+S1451      iso                            gqs                            pro. rachna trivedi
+S1002      marketing reaserch             neilsen                        ms. kalpana shah
+S5831      six sigma                      iqr consultancy                mrs. pridhi desai
+S3421      finace management              state bank india               mr. rahul parmar
+S1521      marketing management           iqr consultancy                pro. pinakin gochar
+S6532      iso                            punyam consultancy             ms. devanshi vohra
+S1920      six sigma                      prescribe plastic house        prof. alap patel
+
+10 rows selected.
+
+=====================================================================
+
+8.
+
+SQL> select students_id from project_details_asqpm where project_specialisation='iso';
+
+STUDENTS_I
+----------
+S1212
+S1451
+S6532
+
+============================================
+
+9.
+
+SQL> select students_id from project_details_asqpm where project_specialisation='six sigma' and project_mentor='mrs. pridhi desai';
+
+STUDENTS_I
+----------
+S1324
+S5831
+
+============================================
+
+10.
+
+SQL> select student_name,city,mobile_no from msc_asqpm where city!='vvnagar';
+
+STUDENT_NAME         CITY        MOBILE_NO
+-------------------- ---------- ----------
+aatish shah          khambhat   9586346962
+diwan asifsha        ahmedabad  8460253067
+mikesh prajapati     vadodra    8886521340
+priyanka patel       anand      6663421764
+akash shah           Mahemdabad 9408724163
+harijitsingh bagga   ahmedabad  7821345367
+meera patel          rajkot     8885432341
+vraj patel           valsad     7773421654
+
+8 rows selected.
+
+=============================================
+
+11.
+
+SQL> select fees_pay from msc_asqpm where fees_pay<22000;
+
+  FEES_PAY
+----------
+     20000
+     20000
+     20000
+     15000
+     20000
+     20000
+     10000
+     15000
+
+8 rows selected.
+
+SQL> select fees_pay*10"new_fees" from msc_asqpm where fees_pay<22000;
+
+  new_fees
+----------
+    200000
+    200000
+    200000
+    150000
+    200000
+    200000
+    100000
+    150000
+
+8 rows selected.
+
+============================================
+
+12.
+
+SQL> alter table project_details_asqpm add (guide_name varchar2(20));
+
+Table altered.
+
+SQL> update project_details_asqpm set guide_name=project_mentor;
+
+10 rows updated.
+
+SQL> alter table project_details_asqpm drop column project_mentor;
+
+Table altered.
+
+SQL> select * from project_details_asqpm;
+
+STUDENTS_I PROJECT_SPECIALISATION         PROJECT_COMPANY                REPORTING PROJECT_STATUS    GUIDE_NAME
+---------- ------------------------------ ------------------------------ --------- -------------------- --------------------
+S1001      six sigma                      amul                           02-DEC-15 in_process        pro. anuj patel
+S1212      iso                            manorial association           26-DEC-15 in_process        mr. vedant vyas
+S1324      six sigma                      vidya wires                    12-JAN-16 reject            mrs. pridhi desai
+S1451      iso                            gqs                            26-DEC-15 in_process        pro. rachna trivedi
+S1002      marketing reaserch             neilsen                        01-JAN-16 in_process        ms. kalpana shah
+S5831      six sigma                      iqr consultancy                31-JAN-16 rework            mrs. pridhi desai
+S3421      finace management              state bank india               22-FEB-16 in_process        mr. rahul parmar
+S1521      marketing management           iqr consultancy                19-MAR-16 finished          pro. pinakin gochar
+S6532      iso                            punyam consultancy             26-DEC-15 finished          ms. devanshi vohra
+S1920      six sigma                      prescribe plastic house        26-DEC-15 rework            prof. alap patel
+
+10 rows selected.
+
+============================================
+
+13.
+
+SQL> select students_id,project_specialisation from project_details_asqpm;
+
+STUDENTS_I PROJECT_SPECIALISATION
+---------- ------------------------------
+S1001      six sigma
+S1212      iso
+S1324      six sigma
+S1451      iso
+S1002      marketing reaserch
+S5831      six sigma
+S3421      finace management
+S1521      marketing management
+S6532      iso
+S1920      six sigma
+
+10 rows selected.
+
+============================================
+
+14.
+
+SQL> update project_details_asqpm set project_specialisation='&project_specialisation' where students_id='&students_id';
+Enter value for project_specialisation:
+Enter value for students_id:
+old   1: update project_details_asqpm set project_specialisation='&project_specialisation' where students_id='&students_id'
+new   1: update project_details_asqpm set project_specialisation='' where students_id=''
+
+0 rows updated.
+
+============================================
+
+15.
+
+SQL> rename project_details_asqpm to project_students_data;
+
+Table renamed.
+
+
+===========================================
+
+16.
+
+SQL> alter table project_students_data add (project_submission date);
+
+Table altered.
+
+
+SQL> desc project_students_data;
+ Name                    Null?    Type
+ ----------------------- -------- ----------------
+ STUDENTS_ID                      VARCHAR2(10)
+ PROJECT_SPECIALISATION  NOT NULL VARCHAR2(30)
+ PROJECT_COMPANY         NOT NULL VARCHAR2(30)
+ REPORTING_DATE                   DATE
+ PROJECT_STATUS                   VARCHAR2(20)
+ GUIDE_NAME                       VARCHAR2(20)
+ PROJECT_SUBMISSION               DATE
+
+============================================
+
+17.
+
+SQL> select avg(fees_pay) from msc_asqpm;
+
+AVG(FEES_PAY)
+-------------
+        18400
+
+
+============================================
+
+18.
+
+SQL> select sysdate+20 from dual;
+
+SYSDATE+2
+---------
+18-OCT-18
+
+============================================
+
+19.
+
+SQL> select students_id,to_char(reporting_date,'day') from project_students_data;
+
+STUDENTS_I TO_CHAR(REPORTING_DATE,'DAY')
+---------- ------------------------------------
+S1001      wednesday
+S1212      saturday
+S1324      tuesday
+S1451      saturday
+S1002      friday
+S5831      sunday
+S3421      monday
+S1521      saturday
+S6532      saturday
+S1920      saturday
+
+10 rows selected.
+
+============================================
+
+20.
+
+SQL> select to_char(reporting_date,'mon'),reporting_date from project_students_data;
+
+TO_CHAR(REPO REPORTING
+------------ ---------
+dec          02-DEC-15
+dec          26-DEC-15
+jan          12-JAN-16
+dec          26-DEC-15
+jan          01-JAN-16
+jan          31-JAN-16
+feb          22-FEB-16
+mar          19-MAR-16
+dec          26-DEC-15
+dec          26-DEC-15
+
+10 rows selected.
+
+
+
+
+============================================
+
+21.
+
+SQL> select students_id,guide_name from project_students_data;
+
+STUDENTS_I GUIDE_NAME
+---------- --------------------
+S1001      pro. anuj patel
+S1212      mr. vedant vyas
+S1324      mrs. pridhi desai
+S1451      pro. rachna trivedi
+S1002      ms. kalpana shah
+S5831      mrs. pridhi desai
+S3421      mr. rahul parmar
+S1521      pro. pinakin gochar
+S6532      ms. devanshi vohra
+S1920      prof. alap patel
+
+10 rows selected.
+
+
+
+SQL> select sqrt(81)"root" from dual;
+
+      root
+----------
+         9
+
+
+SQL> select power(7,2) from dual;
+
+POWER(7,2)
+----------
+        49
+
+
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+
+
+
+
+

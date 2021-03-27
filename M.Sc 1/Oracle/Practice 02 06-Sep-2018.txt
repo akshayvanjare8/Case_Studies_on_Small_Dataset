@@ -1,0 +1,302 @@
+SQL> create table ICC_Cup_T20_18
+  2  (
+  3  cricketer_id varchar2(10)primary key check(cricketer_id like 'I%'),
+  4  coach_id varchar(10) not null,
+  5  cricketer_name varchar2(30),
+  6  toatal_score_t20 number(12) not null,
+  7  total_wicket_t20 number(10)not null,
+  8  country_name varchar2(15)
+  9  );
+
+Table created.
+
+SQL> desc ICC_Cup_T20_18;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CRICKETER_ID                              NOT NULL VARCHAR2(10)
+ COACH_ID                                  NOT NULL VARCHAR2(10)
+ CRICKETER_NAME                                     VARCHAR2(30)
+ TOATAL_SCORE_T20                          NOT NULL NUMBER(12)
+ TOTAL_WICKET_T20                          NOT NULL NUMBER(10)
+ COUNTRY_NAME                                       VARCHAR2(15)
+
+SQL> insert into ICC_Cup_T20_18 values ('&cricketer_id','&coach_id','&cricketer_name','&total_score_t20','&total_wicket_t20','&country_name');
+Enter value for cricketer_id: I2001
+Enter value for coach_id: I121
+Enter value for cricketer_name: sachin tendulkar
+Enter value for total_score_t20: 190
+Enter value for total_wicket_t20: 8
+Enter value for country_name: india
+old   1: insert into ICC_Cup_T20_18 values ('&cricketer_id','&coach_id','&cricketer_name','&total_score_t20','&total_wicket_t20','&country_name')
+new   1: insert into ICC_Cup_T20_18 values ('I2001','I121','sachin tendulkar','190','8','india')
+
+1 row created.
+
+
+SQL> select * from ICC_Cup_T20_18;
+
+CRICKETER_ COACH_ID   CRICKETER_NAME                 TOATAL_SCORE_T20 TOTAL_WICKET_T20 COUNTRY_NAME
+---------- ---------- ------------------------------ ---------------- ---------------- ---------------
+I2001      I121       sachin tendulkar                            190                8 india
+I2002      A122       umar gull                                  1255                7 pakistan
+I2003      C171       gauttam gambhir                             190                8 india
+I2114      D135       ricky pointing                              183                7 australia
+I3115      B154       brett lee                                   175                5 australia
+I5126      P167       shahid afridi                               178                6 pakistan
+
+6 rows selected.
+
+
+SQL> create table ICC_Cup_Test18_Details
+  2  (
+  3  cricketer_id varchar2(10)references ICC_Cup_T20_18,
+  4  played_against varchar(10) not null,
+  5  wicket_taken varchar2(12)not null,
+  6  score number(5),
+  7  coach_name varchar2(30),
+  8  m_date date
+  9  );
+
+Table created.
+
+SQL> desc ICC_Cup_Test18_Details;
+ Name                                                                                                                                                                  Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- --
+------------------------------------------------------------------------------------------------------------------
+ CRICKETER_ID                                                                                                                                                                   VARCHAR2(1
+0)
+ PLAYED_AGAINST                                                                                                                                                        NOT NULL VARCHAR2(1
+0)
+ WICKET_TAKEN                                                                                                                                                          NOT NULL VARCHAR2(1
+2)
+ SCORE                                                                                                                                                                          NUMBER(5)
+ COACH_NAME                                                                                                                                                                     VARCHAR2(3
+0)
+ M_DATE                                                                                                                                                                         DATE
+
+
+SQL> insert into ICC_Cup_Test18_Details values ('&cricketer_id','&played_against','&wicket_taken','&score','&coach_name','&m_date');
+Enter value for cricketer_id: I2001
+Enter value for played_against: pakistan
+Enter value for wicket_taken: 5
+Enter value for score: 100
+Enter value for coach_name: gary kirsten
+Enter value for m_date: 12-jan-2011
+old   1: insert into ICC_Cup_Test18_Details values ('&cricketer_id','&played_against','&wicket_taken','&score','&coach_name','&m_date')
+new   1: insert into ICC_Cup_Test18_Details values ('I2001','pakistan','5','100','gary kirsten','12-jan-2011')
+
+1 row created.
+
+SQL> select * from ICC_Cup_Test18_Details;
+
+CRICKETER_ PLAYED_AGA WICKET_TAKEN      SCORE COACH_NAME                     M_DATE
+---------- ---------- ------------ ---------- ------------------------------ ---------
+I2001      pakistan   5                   100 gary kirsten                   12-JAN-11
+I2002      australia  4                    90 john wright                    17-JUL-13
+I2003      pakistan   5                    76 ajit wadekar                   18-JAN-11
+I2114      australia  6                    90 bishendra bedi                 04-MAR-13
+I3115      india      4                    95 stephen moreton                23-APR-15
+I5126      india      5                    80 rojer harper                   25-MAY-10
+
+6 rows selected.
+
+=======================================================================================================
+
+1.
+
+SQL> select cricketer_name from ICC_Cup_T20_18 where toatal_score_t20>90;
+
+CRICKETER_NAME
+------------------------------
+sachin tendulkar
+umar gull
+gauttam gambhir
+ricky pointing
+brett lee
+shahid afridi
+
+6 rows selected.
+
+
+or
+
+
+SQL> select cricketer_name from ICC_Cup_T20_18 where cricketer_id in (select cricketer_id from ICC_Cup_Test18_Details where score>90);
+
+CRICKETER_NAME
+------------------------------
+sachin tendulkar
+brett lee
+
+
+
+===============================================================================================================
+
+2.
+
+SQL> select cricketer_name,country_name from ICC_Cup_T20_18;
+
+CRICKETER_NAME                 COUNTRY_NAME
+------------------------------ ---------------
+sachin tendulkar               india
+umar gull                      pakistan
+gauttam gambhir                india
+ricky pointing                 australia
+brett lee                      australia
+shahid afridi                  pakistan
+
+6 rows selected.
+
+
+===============================================================================================================
+
+3.
+SQL> select * from ICC_Cup_Test18_Details where played_against='india' and played_against='pakistan';
+
+no rows selected
+
+
+or
+
+
+SQL> select cricketer_name from ICC_Cup_T20_18 where cricketer_id in (select cricketer_id from ICC_Cup_Test18_details where played_against in ('india','pakistan'));
+
+CRICKETER_NAME
+------------------------------
+sachin tendulkar
+gauttam gambhir
+brett lee
+shahid afridi
+
+================================================================================================================
+
+4.
+
+SQL> select * from ICC_Cup_Test18_Details where length(played_against)=5;
+
+CRICKETER_ PLAYED_AGA WICKET_TAKEN      SCORE COACH_NAME                     M_DATE
+---------- ---------- ------------ ---------- ------------------------------ ---------
+I3115      india      4                    95 stephen moreton                23-APR-15
+I5126      india      5                    80 rojer harper                   25-MAY-10
+
+
+=====================================================================================================================
+
+5.
+
+SQL> update ICC_Cup_T20_18 set country_name='pakistan' where coach_id='P135';
+
+0 rows updated.
+
+==================================================================================================================
+
+6.
+
+
+SQL> delete from ICC_Cup_Test18_Details where cricketer_id='&cricekter_id';
+Enter value for cricekter_id: I2001
+old   1: delete from ICC_Cup_Test18_Details where cricketer_id='&cricekter_id'
+new   1: delete from ICC_Cup_Test18_Details where cricketer_id='I2001'
+
+1 row deleted.
+
+SQL> /
+Enter value for cricekter_id: I2002
+old   1: delete from ICC_Cup_Test18_Details where cricketer_id='&cricekter_id'
+new   1: delete from ICC_Cup_Test18_Details where cricketer_id='I2002'
+
+1 row deleted.
+
+SQL> /
+Enter value for cricekter_id: I2003
+old   1: delete from ICC_Cup_Test18_Details where cricketer_id='&cricekter_id'
+new   1: delete from ICC_Cup_Test18_Details where cricketer_id='I2003'
+
+1 row deleted.
+
+SQL> /
+Enter value for cricekter_id: I2114
+old   1: delete from ICC_Cup_Test18_Details where cricketer_id='&cricekter_id'
+new   1: delete from ICC_Cup_Test18_Details where cricketer_id='I2114'
+
+1 row deleted.
+
+SQL> /
+Enter value for cricekter_id: I3115
+old   1: delete from ICC_Cup_Test18_Details where cricketer_id='&cricekter_id'
+new   1: delete from ICC_Cup_Test18_Details where cricketer_id='I3115'
+
+1 row deleted.
+
+SQL> /
+Enter value for cricekter_id: I5126
+old   1: delete from ICC_Cup_Test18_Details where cricketer_id='&cricekter_id'
+new   1: delete from ICC_Cup_Test18_Details where cricketer_id='I5126'
+
+1 row deleted.
+
+SQL> delete from ICC_Cup_T20_18 where toatal_score_t20>120;
+
+6 rows deleted.
+
+===================================================================================================================
+7.
+
+
+SQL> alter table ICC_Cup_T20_18 add (telephone number (10));
+
+Table altered.
+
+============================================================================================================================
+
+8.
+
+SQL> select count(cricketer_id),sum(score) from ICC_Cup_Test18_Details where played_against='pakistan';
+
+COUNT(CRICKETER_ID) SUM(SCORE)
+------------------- ----------
+                  2        176
+
+
+============================================================================================================================
+9.
+
+SQL> create table world_cup_2017 as select cricketer_id,coach_name,score,wicket_taken from ICC_Cup_Test18_Details;
+
+Table created.
+
+SQL> select * from world_cup_2017;
+
+CRICKETER_ COACH_NAME                          SCORE WICKET_TAKEN
+---------- ------------------------------ ---------- ------------
+I2001      gary kirsten                          100 5
+I2002      john wright                            90 4
+I2003      ajit wadekar                           76 5
+I2114      bishendra bedi                         90 6
+I3115      stephen moreton                        95 4
+I5126      rojer harper                           80 5
+
+6 rows selected.
+
+=============================================================================================================================
+
+10.
+
+SQL> update  ICC_Cup_Test18_Details set score=score+score*0.10;
+
+6 rows updated.
+
+SQL> select * from ICC_Cup_test18_Details;
+
+CRICKETER_ PLAYED_AGA WICKET_TAKEN      SCORE COACH_NAME                     M_DATE
+---------- ---------- ------------ ---------- ------------------------------ ---------
+I2001      pakistan   5                   110 gary kirsten                   12-JAN-11
+I2002      australia  4                    99 john wright                    17-JUL-13
+I2003      pakistan   5                    84 ajit wadekar                   18-JAN-11
+I2114      australia  6                    99 bishendra bedi                 04-MAR-13
+I3115      india      4                   105 stephen moreton                23-APR-15
+I5126      india      5                    88 rojer harper                   25-MAY-10
+
+6 rows selected.
+
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*

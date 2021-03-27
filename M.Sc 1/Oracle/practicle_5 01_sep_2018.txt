@@ -1,0 +1,636 @@
+SQL> create table bramhaputra_ship_info
+  2  (
+  3  boat_inward_number number(10) primary key,
+  4  boat_type varchar(15) not null,
+  5  boat_storage_capacity number(8),
+  6  oil_tank_capacity varchar2(15) not null,
+  7  captain_name varchar2(25)
+  8  );
+
+Table created.
+
+SQL> desc bramhaputra_ship_info;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- -----------------
+ BOAT_INWARD_NUMBER                        NOT NULL NUMBER(10)
+ BOAT_TYPE                                 NOT NULL VARCHAR2(15)
+ BOAT_STORAGE_CAPACITY                              NUMBER(8)
+ OIL_TANK_CAPACITY                         NOT NULL VARCHAR2(15)
+ CAPTAIN_NAME                                       VARCHAR2(25)
+
+
+
+SQL> insert into bramhaputra_ship_info values('&boat_inward_number','&boat_type','&boat_storage_capacity','&oil_tank_capacity','&captain_name');
+Enter value for boat_inward_number: 2112
+Enter value for boat_type: carriage
+Enter value for boat_storage_capacity: 10000
+Enter value for oil_tank_capacity: 500
+Enter value for captain_name: capt. cook
+old   1: insert into bramhaputra_ship_info values('&boat_inward_number','&boat_type','&boat_storage_capacity','&oil_tank_capacity','&captain_name')
+new   1: insert into bramhaputra_ship_info values('2112','carriage','10000','500','capt. cook')
+
+1 row created.
+
+
+SQL> select * from bramhaputra_ship_info;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2112 carriage                        10000 500
+capt. cook
+
+              2120 passenger                        6780 430
+comm. hook
+
+              1125 cruise                           3450 400
+capt. stark
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              1129 carriage                        11200 630
+capt. cook
+
+              2128 passenger                        7300 500
+lt. sheep
+
+              1120 carriage                        12500 650
+comm. troy
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2134 carriage                         9500 475
+capt. kite
+
+
+7 rows selected.
+
+
+====================================================================================================================================================
+
+1.Create new table from the Brahmputra_ship_Info table and name it as brahputra_details which contains only the column boat inward number and boat type.
+
+
+SQL> create table bramhaputra_detail as select boat_inward_number,boat_type from bramhaputra_ship_info;
+
+Table created.
+
+SQL> select * from bramhaputra_detail;
+
+BOAT_INWARD_NUMBER BOAT_TYPE
+------------------ ---------------
+              2112 carriage
+              2120 passenger
+              1125 cruise
+              1129 carriage
+              2128 passenger
+              1120 carriage
+              2134 carriage
+
+7 rows selected.
+
+
+============================================================================================================================================================
+
+2.	Search those boats which are cruise liners
+
+
+SQL> select *from bramhaputra_ship_info where boat_type='cruise';
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              1125 cruise                           3450 400
+capt. stark
+
+
+===========================================================================================================================================
+
+3.	Search those boats lead by captain cook.
+
+SQL> select *from bramhaputra_ship_info where captain_name='capt. cook';
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2112 carriage                        10000 500
+capt. cook
+
+              1129 carriage                        11200 630
+capt. cook
+
+
+============================================================================================================================================
+
+4.	Search those records which are for passenger transportation
+
+SQL> select *from bramhaputra_ship_info where boat_type='passenger';
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2120 passenger                        6780 430
+comm. hook
+
+              2128 passenger                        7300 500
+lt. sheep
+
+==================================================================================================================================
+
+5.	Search for those boats which have the storage capacity more than 10000(inclusive).
+
+SQL> select *from bramhaputra_ship_info where boat_storage_capacity>=10000;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2112 carriage                        10000 500
+capt. cook
+
+              1129 carriage                        11200 630
+capt. cook
+
+              1120 carriage                        12500 650
+comm. troy
+
+=============================================================
+
+6.
+
+
+SQL> select *from bramhaputra_ship_info where oil_tank_capacity<500;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2120 passenger                        6780 430
+comm. hook
+
+              1125 cruise                           3450 400
+capt. stark
+
+              2134 carriage                         9500 475
+capt. kite
+
+
+======================================================================================
+
+7.
+
+SQL> select *from bramhaputra_ship_info where boat_type='carriage' and boat_storage_capacity>=11000;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              1129 carriage                        11200 630
+capt. cook
+
+              1120 carriage                        12500 650
+comm. troy
+
+
+
+===========================================================================================================
+8.
+
+SQL> select *from bramhaputra_ship_info where boat_type='carriage' and boat_storage_capacity>=8000 and oil_tank_capacity<500;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2134 carriage                         9500 475
+capt. kite
+
+
+===========================================================================================
+
+9.
+
+SQL> select *from bramhaputra_ship_info order by boat_inward_number desc;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2134 carriage                         9500 475
+capt. kite
+
+              2128 passenger                        7300 500
+lt. sheep
+
+              2120 passenger                        6780 430
+comm. hook
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2112 carriage                        10000 500
+capt. cook
+
+              1129 carriage                        11200 630
+capt. cook
+
+              1125 cruise                           3450 400
+capt. stark
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              1120 carriage                        12500 650
+comm. troy
+
+
+7 rows selected.
+
+
+===========================================================================================
+
+10.
+
+SQL> select *from bramhaputra_ship_info order by boat_type asc;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2112 carriage                        10000 500
+capt. cook
+
+              1129 carriage                        11200 630
+capt. cook
+
+              1120 carriage                        12500 650
+comm. troy
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2134 carriage                         9500 475
+capt. kite
+
+              1125 cruise                           3450 400
+capt. stark
+
+              2128 passenger                        7300 500
+lt. sheep
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2120 passenger                        6780 430
+comm. hook
+
+
+7 rows selected.
+
+
+======================================================================================
+
+11.
+
+
+SQL> select *from bramhaputra_ship_info order by boat_storage_capacity asc;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              1125 cruise                           3450 400
+capt. stark
+
+              2120 passenger                        6780 430
+comm. hook
+
+              2128 passenger                        7300 500
+lt. sheep
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              2134 carriage                         9500 475
+capt. kite
+
+              2112 carriage                        10000 500
+capt. cook
+
+              1129 carriage                        11200 630
+capt. cook
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME
+-------------------------
+              1120 carriage                        12500 650
+comm. troy
+
+
+7 rows selected.
+
+
+=========================================================================================
+
+12.
+
+SQL> alter table bramhaputra_ship_info add (price number(7,2));
+
+Table altered.
+
+
+=================================
+
+13.
+
+SQL> update bramhaputra_ship_info set price=oil_tank_capacity*100;
+
+7 rows updated.
+
+SQL> select * from bramhaputra_ship_info;
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME                   PRICE
+------------------------- ----------
+              2112 carriage                        10000 500
+capt. cook                     50000
+
+              2120 passenger                        6780 430
+comm. hook                     43000
+
+              1125 cruise                           3450 400
+capt. stark                    40000
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME                   PRICE
+------------------------- ----------
+              1129 carriage                        11200 630
+capt. cook                     63000
+
+              2128 passenger                        7300 500
+lt. sheep                      50000
+
+              1120 carriage                        12500 650
+comm. troy                     65000
+
+
+BOAT_INWARD_NUMBER BOAT_TYPE       BOAT_STORAGE_CAPACITY OIL_TANK_CAPACI
+------------------ --------------- --------------------- ---------------
+CAPTAIN_NAME                   PRICE
+------------------------- ----------
+              2134 carriage                         9500 475
+capt. kite                     47500
+
+
+7 rows selected.
+
+SQL>
+
+
+==========================================
+
+14.
+
+SQL> alter table bramhaputra_ship_info add (license_number number(7));
+
+Table altered.
+
+
+=============================================
+
+15.
+
+SQL> alter table bramhaputra_ship_info modify (license_number varchar2(7));
+
+Table altered.
+
+
+=========================================================
+
+16.
+
+SQL> rename bramhaputra_detail to boat_bramhaputra_1;
+
+Table renamed.
+
+==================================================
+
+17.
+
+SQL> update bramhaputra_ship_info set captain_name='capt. cork' where boat_inward_number='1123';
+
+0 rows updated.
+
+==================================================
+
+18.
+
+SQL> update bramhaputra_ship_info set boat_type='travel' where boat_type='passenger';
+
+2 rows updated.
+
+
+===================================================
+
+19.
+
+SQL> insert into bramhaputra_ship_info values('1130','cruise','25000','700','lt. sheep','70000','');
+
+1 row created.
+
+===================================================
+
+20.
+
+SQL> delete from bramhaputra_ship_info where boat_inward_number='&boat_inward_number';
+Enter value for boat_inward_number: 1140
+old   1: delete from bramhaputra_ship_info where boat_inward_number='&boat_inward_number'
+new   1: delete from bramhaputra_ship_info where boat_inward_number='1140'
+
+0 rows deleted.
+
+
+===================================================
+
+21.
+
+SQL> update bramhaputra_ship_info set price='&price' where boat_inward_number='&boat_inward_number';
+Enter value for price: 70000
+Enter value for boat_inward_number: 1120
+old   1: update bramhaputra_ship_info set price='&price' where boat_inward_number='&boat_inward_number'
+new   1: update bramhaputra_ship_info set price='70000' where boat_inward_number='1120'
+
+1 row updated.
+
+===================================================
+
+22.
+
+SQL> select boat_inward_number as boat_id,boat_type as boat_usage,oil_tank_capacity as tank_size from bramhaputra_ship_info where boat_type='travel';
+
+   BOAT_ID BOAT_USAGE      TANK_SIZE
+---------- --------------- ---------------
+      2120 travel          430
+      2128 travel          500
+
+===================================================
+
+23.
+
+SQL> alter table bramhaputra_ship_info add (leader varchar2(25));
+
+Table altered.
+
+SQL> update bramhaputra_ship_info set leader=captain_name;
+
+8 rows updated.
+
+SQL> select line 300;
+select line 300
+            *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> alter table bramhaputra_ship_info drop column captain_name;
+
+Table altered.
+
+=====================================================
+24.
+
+SQL> select boat_inward_number,leader from bramhaputra_ship_info;
+
+BOAT_INWARD_NUMBER LEADER
+------------------ -------------------------
+              2112 capt. cook
+              2120 comm. hook
+              1125 capt. stark
+              1129 capt. cook
+              2128 lt. sheep
+              1120 comm. troy
+              2134 capt. kite
+              1130 lt. sheep
+
+8 rows selected.
+
+
+=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*==*=*=*=*=*=*=*=*=**=*=*=*=*=*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
