@@ -1,0 +1,351 @@
+﻿<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml/">
+<head>
+<meta charset="utf-8" />
+<style>
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;         /*Chrome all*/
+    -moz-user-select: none;             /*Firefox all*/
+    -ms-user-select: none;              /*IE 10+*/
+    user-select: none;                 /*Likely future*/
+    font-family: 'Segoe UI', Helvetica;
+    font-size: 13px;
+}
+
+.note {
+    margin: 16px;
+    padding: 3px 10px;
+    border: 1px solid transparent;
+}
+.note > div {
+    display: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word; /* future version of deprecated 'word-wrap' */
+}
+.note > textarea,
+.note > div{
+    font-family: inherit;
+    font-size: 13px;
+    width: 100%;
+    min-height: 34px;
+    overflow: hidden;
+    resize:none;
+    border:none;
+    margin-right: 20px;
+}
+.note > textarea:focus{ /*remove browser's default blue glow focus border */
+    outline: none;
+}
+
+.emptyline {
+    background-color:white;
+    border:none;
+}
+
+.tableselectioncontainer {
+    display: table;
+    border: 1px solid transparent;
+    margin-top: 8px;
+    margin-left: 16px;
+    margin-bottom: 5px;
+    margin-right: 6px;
+    padding: 10px 16px 8px 16px;
+    background: white;
+}
+
+th {
+    font-family: 'Segoe UI semibold', 'Segoe UI', Helvetica;
+    font-weight: normal;
+    padding-right: 13pt;
+    color: black;
+}
+
+td {
+    vertical-align: top;
+    font-size: 13px;
+    padding-right: 7px;
+    padding-left: 7px;
+    white-space: nowrap;
+    background-color: white;
+}
+
+a{
+    -webkit-user-drag: none;
+}
+
+colgroup {
+    border-bottom: 2px solid transparent;
+}
+
+.footnote {
+    font-style: italic;
+    font-size: 11px;
+    margin-left: 12px;
+    margin-top: 12px;
+}
+
+.nonitalic{
+    font-style:normal;
+}
+
+.outmessage {
+    font-weight: 600;
+    font-family: 'Segoe UI', Helvetica;
+    display:table;
+    border: 1px solid transparent;
+    margin-left: 16px;
+    margin-top: 8px;
+    padding: 3px 11px;
+    white-space: nowrap;
+}
+
+td.lft {
+    text-align: left;
+}
+
+.leftpadding{
+    padding-left: 20px;
+}
+
+td.rt {
+    text-align: right;
+}
+
+td.cen {
+    text-align: center;
+}
+
+.tlabel {
+    background-color: white;
+    color: black;
+    font-size: 13px;
+}
+
+td.hr {
+    border-bottom: thin solid black;
+}
+
+.tdata {
+    background-color: white;
+    color: black;
+    font-size: .9em;
+    font-weight: normal;
+}
+
+.tlabel td {
+	vertical-align: bottom;
+    font-size: 1em;
+}
+
+.link {
+    font-family: 'Segoe UI semibold', 'Segoe UI', Helvetica;
+    font-size: 16px;
+    color: #2a6db3;
+    text-decoration:none;
+}
+
+.link:hover {
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+.importedSessionText {
+    font-family: 'Segoe UI semibold', 'Segoe UI', Helvetica;
+    font-size: 16px;
+    color: #2a6db3;
+    margin-left: 16px;
+    margin-top: 8px;
+    padding: 6px 16px;
+    display:table;
+}
+
+.builtin {
+    font-family: 'Segoe UI semibold', 'Segoe UI', Helvetica;
+    font-size: 16px;
+    color: #2a6db3;
+    margin-left: 16px;
+    margin-top: 8px;
+    padding: 6px 16px;
+    display:table;
+}
+
+.paragraph {
+    font-family: 'Segoe UI', Helvetica;
+    display: table;
+    border: 1px solid transparent;
+    margin-left: 16px;
+    margin-right: 4px;
+    margin-top: 8px;
+    padding: 3px 16px
+}
+.paragraph + .paragraph{
+	margin-top: 0px;
+}
+
+.subtitle{
+    font-family: 'Segoe UI', Helvetica;
+    display: table;
+    border: 1px solid transparent;
+    margin-left: -16px;
+    margin-top: 8px;
+    padding: 3px 16px
+}
+
+.command-section {
+    display: block;
+    margin-top: 2px;
+    padding-bottom: 2px;
+    width: 775px;
+    border: 1px solid transparent;
+    background-color:white; /* THIS ISN'T NEEDED - WE IS SET TO GET THE CORRECT COLOR WHEN DOING HTML2CANVAS - I FOUND THAT HTML2CANVAS HAS A PROPERTY WE CAN USE INSTEAD*/
+
+}
+
+.command-section.collapsed{
+    padding-bottom: 0px;
+}
+.command-section .expander{
+    content:url(openexpander.png);
+}
+.command-section.collapsed .expander{
+    content:url(closeexpander.png);
+}
+.command-section.hover .commandtitlesection,
+.command-section.selected .commandtitlesection{
+    /*Use to reduce the padding-left to prevent the text
+      from moving to the right when the expander is added*/
+    padding-left: 0px;
+}
+
+
+.commandtitlesection {
+    font-family: 'Segoe UI semibold', 'Segoe UI', Helvetica;
+    font-size: 21px;
+    color: #004d72;
+    padding-left: 21px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    white-space: nowrap;
+    overflow:hidden;
+}
+
+.section {
+    display: table;
+    border: 1px solid transparent;
+    margin-left: 8px;
+    padding-bottom: 6px;
+    padding-top: 8px;
+    padding-right: 16px;
+}
+
+.commandsectionheader {
+    font-family: 'Segoe UI semibold', 'Segoe UI', Helvetica;
+    font-size: 18.5px;
+    color: #004d72;
+    padding-left: 18px;
+    white-space: nowrap;
+    position:relative; /*for positioning downarrow*/
+    padding-right: 14px;  /*space for downarrow*/
+}
+
+.commandbutton {
+    display: inline;
+    font-family: 'Segoe UI semibold', 'Segoe UI', Helvetica;
+    font-size: 12px;
+    text-align: right;
+    border: 1px solid #a9a9a9;
+    border-radius: 4px;
+    color: #6b6b6b;
+    cursor: pointer;
+    float:right; 
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-right:20px;
+    padding-left: 9px;
+    padding-bottom: 1px;
+}
+
+
+.menudownarrow {
+    margin-left: 7px;
+    margin-right: 7px;
+    margin-bottom: 2px;
+    content:url(menubuttonarrow.png);
+}
+
+.downarrow {
+    position:absolute;
+    right: 0px;
+    top: 4px;
+    visibility:hidden;
+    content:url(menubuttonarrow.png);
+}
+
+
+.tabletitle {
+    font-family: 'Segoe UI semibold', 'Segoe UI', Helvetica;
+    font-size: 17px;
+    color: #004d72;
+    display:block;
+    position:relative; /*for positioning downarrow*/
+    padding-right: 14px;  /*space for downarrow*/
+}
+
+.stattable { 
+     font-size: 12px;
+    margin-top: 6px;
+     border-collapse: collapse;
+ }
+
+.error {
+     font-weight: 600;
+     color:#d54133;
+ }
+ 
+.hover {
+    border: 1px solid #c6c6c6;
+    border-radius: 4px;
+}
+
+.columnhover {
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
+}
+
+.columnpartialhover {
+    border-left: 1px solid #c6c6c6;
+    border-top: 1px solid #c6c6c6;
+    border-bottom: 1px solid #c6c6c6;
+    border-radius: 3px;
+}
+
+.columnselect {
+    border: 2px solid;
+    border-radius: 3px;
+    border-color : #2b99cc;
+}
+.columnselect.inactive {
+    border-color: #c6c6c6;
+}
+.selected {
+    box-shadow: 0 0 0 2px #2b99cc inset;
+    border-radius: 5px;
+}
+.selected.inactive {
+    box-shadow: 0 0 0 2px #c6c6c6 inset;
+}
+
+.labelCollapse{
+	margin-bottom:-1.5em;
+	width: 100%;
+}
+
+
+.link:hover { text-decoration: none; cursor: default;}
+body {-webkit-touch-callout: all; -webkit-user-select: all; -khtml-user-select: all;-moz-user-select: all; -ms-user-select: element; user-select:all;} 
+
+</style>
+</head>
+<body id="sessionWindow" style="cursor: default;"><div class="command-section" id="5f72f48e-c9a6-4301-89d9-b460987e5a0f" style="width: 775px;"><div id="d73edb3a-8730-49f7-8322-3feb0647a1bf" class="commandtitlesection">One-way ANOVA: Tip, Y, Coupon</div><div class="expander-section"><div class="tableselectioncontainer"><div id="1e2845e5-dc30-40c7-9be0-50559550da28" class="tabletitle">Method</div><table id="1e2845e5-dc30-40c7-9be0-50559550da28" class="stattable"><colgroup id="bbb7ae5a-d55c-448f-a973-c003d92d021c" cid="0" class=""></colgroup><colgroup id="d0a31546-faac-4ed8-acb0-830d6d75dba0" cid="1" class=""></colgroup><tbody><tr class="tdata"><td class="lft" cid="0">Null hypothesis</td><td class="lft" cid="1">All means are equal</td></tr><tr class="tdata"><td class="lft" cid="0">Alternative hypothesis</td><td class="lft" cid="1">Not all means are equal</td></tr><tr class="tdata"><td class="lft" cid="0">Significance level</td><td class="lft" cid="1">α = 0.05</td></tr></tbody></table><div id="54ea28aa-6db1-498f-856b-abe7af203f38" class="footnote">Equal variances were assumed for the analysis.</div></div><div class="tableselectioncontainer"><div id="92dc03b8-9358-4549-8e31-8ff2840fb28d" class="tabletitle">Factor Information</div><table id="92dc03b8-9358-4549-8e31-8ff2840fb28d" class="stattable"><colgroup id="282cf009-e78a-434f-9a26-63083218ebcb" cid="0" class=""></colgroup><colgroup id="7a17b3c5-d399-4329-ba7a-c7bcc5fd1979" cid="1"></colgroup><colgroup id="574a4598-2d94-4a83-b589-c06c7316ffa9" cid="2" class=""></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Factor</td><td class="rt hr" cid="1">Levels</td><td class="lft hr" cid="2">Values</td></tr><tr class="tdata"><td class="lft" cid="0">Factor</td><td class="rt" cid="1">3</td><td class="lft" cid="2">Tip, Y, Coupon</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="0c833fcd-a354-4cf7-b270-6a318595cf9c" class="tabletitle">Analysis of Variance</div><table id="0c833fcd-a354-4cf7-b270-6a318595cf9c" class="stattable"><colgroup id="df13c1de-1989-4495-b9df-d42bb25c477d" cid="0"></colgroup><colgroup id="d1017c45-8a28-46e1-837d-f4a84ae336bd" cid="1"></colgroup><colgroup id="9d888ba7-278d-4321-aba7-168d1731ea4c" cid="2"></colgroup><colgroup id="d0cc6ece-33f4-4c4a-a815-a88f16778b69" cid="3"></colgroup><colgroup id="4aa9c961-69c4-4ecf-8351-c4d9a896f26a" cid="4"></colgroup><colgroup id="f05afeeb-89a3-49bd-9317-3b8ab6da37c0" cid="5"></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Source</td><td class="rt hr" cid="1">DF</td><td class="rt hr" cid="2">Adj SS</td><td class="rt hr" cid="3">Adj MS</td><td class="rt hr" cid="4">F-Value</td><td class="rt hr" cid="5">P-Value</td></tr><tr class="tdata"><td class="lft" cid="0">Factor</td><td class="rt" cid="1">2</td><td class="rt" cid="2">543.40</td><td class="rt" cid="3">271.701</td><td class="rt" cid="4">295.92</td><td class="rt" cid="5">0.000</td></tr><tr class="tdata"><td class="lft" cid="0">Error</td><td class="rt" cid="1">45</td><td class="rt" cid="2">41.32</td><td class="rt" cid="3">0.918</td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">Total</td><td class="rt" cid="1">47</td><td class="rt" cid="2">584.72</td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="491dc3ae-9bb4-4738-bec8-dc52217012da" class="tabletitle">Model Summary</div><table id="491dc3ae-9bb4-4738-bec8-dc52217012da" class="stattable"><colgroup id="a0823522-1f97-4755-a0ac-c4bca56e18ae" cid="0"></colgroup><colgroup id="63bc1863-21ed-43a8-b572-08d9a449efe0" cid="1"></colgroup><colgroup id="ff909f42-eedb-4d6a-9d6c-929ffd937dde" cid="2"></colgroup><colgroup id="234daff0-59c8-464f-afa4-31e69c3d0c7b" cid="3"></colgroup><tbody><tr class="tlabel hr"><td class="rt hr" cid="0">S</td><td class="rt hr" cid="1">R-sq</td><td class="rt hr" cid="2">R-sq(adj)</td><td class="rt hr" cid="3">R-sq(pred)</td></tr><tr class="tdata"><td class="rt" cid="0">0.958210</td><td class="rt" cid="1">92.93%</td><td class="rt" cid="2">92.62%</td><td class="rt" cid="3">91.96%</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="0d5758e3-46c7-4678-b5f8-9337bc582492" class="tabletitle">Means</div><table id="0d5758e3-46c7-4678-b5f8-9337bc582492" class="stattable"><colgroup id="402d7eb4-0e22-4650-8c24-824e8da14dd1" cid="0"></colgroup><colgroup id="9e42ccb3-65d2-4264-926d-471c36bf9fce" cid="1"></colgroup><colgroup id="212e8b0e-836e-48e8-a78d-f44217fe90af" cid="2"></colgroup><colgroup id="5e28f12a-3341-4521-874d-15938c8273b6" cid="3"></colgroup><colgroup id="65980936-f2be-4186-94a0-62531e96b9e3" cid="4" class=""></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Factor</td><td class="rt hr" cid="1">N</td><td class="rt hr" cid="2">Mean</td><td class="rt hr" cid="3">StDev</td><td class="cen hr" cid="4">95% CI</td></tr><tr class="tdata"><td class="lft" cid="0">Tip</td><td class="rt" cid="1">16</td><td class="rt" cid="2">2.500</td><td class="rt" cid="3">1.155</td><td class="cen" cid="4">(2.018, 2.982)</td></tr><tr class="tdata"><td class="lft" cid="0">Y</td><td class="rt" cid="1">16</td><td class="rt" cid="2">9.6375</td><td class="rt" cid="3">0.2964</td><td class="cen" cid="4">(9.1550, 10.1200)</td></tr><tr class="tdata"><td class="lft" cid="0">Coupon</td><td class="rt" cid="1">16</td><td class="rt" cid="2">2.500</td><td class="rt" cid="3">1.155</td><td class="cen" cid="4">(2.018, 2.982)</td></tr></tbody></table><div id="7db6c74e-1fc8-49c8-b4aa-2a2c28bcb2d2" class="footnote">Pooled StDev = 0.958210</div></div><div class="builtin" id="dab8c9d6-da93-4e41-8c81-d269121c8f1d"><div class="textarea">Interval Plot of Tip, Y, ...</div></div></div></div><div class="command-section" id="5075f622-6e70-4f7c-b579-189ba8461968" style="width: 775px;"><div id="282a9dad-dfc7-44af-9b44-d18f46269d0b" class="commandtitlesection">One-way ANOVA: Y versus Coupon</div><div class="expander-section"><div class="tableselectioncontainer"><div id="13dec8c7-8c00-4e61-be76-7e54139bc88c" class="tabletitle">Method</div><table id="13dec8c7-8c00-4e61-be76-7e54139bc88c" class="stattable"><colgroup id="95aceea7-160c-4356-8769-c156a9fc86a6" cid="0" class=""></colgroup><colgroup id="e67efabc-f2bb-4b94-83f7-c2f88147a060" cid="1" class=""></colgroup><tbody><tr class="tdata"><td class="lft" cid="0">Null hypothesis</td><td class="lft" cid="1">All means are equal</td></tr><tr class="tdata"><td class="lft" cid="0">Alternative hypothesis</td><td class="lft" cid="1">Not all means are equal</td></tr><tr class="tdata"><td class="lft" cid="0">Significance level</td><td class="lft" cid="1">α = 0.05</td></tr></tbody></table><div id="3a802566-8f9f-4b1e-93a8-76c11a0f8339" class="footnote">Equal variances were assumed for the analysis.</div></div><div class="tableselectioncontainer"><div id="fa78afc3-1dd9-4a0c-a3fe-f9df3cc384b8" class="tabletitle">Factor Information</div><table id="fa78afc3-1dd9-4a0c-a3fe-f9df3cc384b8" class="stattable"><colgroup id="7c0daca9-5b19-4b4e-ba29-cb04de32b4b9" cid="0"></colgroup><colgroup id="51819a3b-c3c3-411a-abbd-7c92aeba4e93" cid="1"></colgroup><colgroup id="66008e41-f4ed-41a2-9856-c2eff98578de" cid="2" class=""></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Factor</td><td class="rt hr" cid="1">Levels</td><td class="lft hr" cid="2">Values</td></tr><tr class="tdata"><td class="lft" cid="0">Coupon</td><td class="rt" cid="1">4</td><td class="lft" cid="2">1, 2, 3, 4</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="6dcdfd96-a8c3-4de3-bca1-d5ecf0f2a9db" class="tabletitle">Analysis of Variance</div><table id="6dcdfd96-a8c3-4de3-bca1-d5ecf0f2a9db" class="stattable"><colgroup id="7164c00d-67fa-4006-8df6-afa910a8196c" cid="0"></colgroup><colgroup id="7eee13c5-e6d3-4e15-a49c-e707eb4d29e7" cid="1"></colgroup><colgroup id="1ee4e0ab-d39d-4006-8ef6-2b8700ec8945" cid="2" class=""></colgroup><colgroup id="654d9394-c516-489b-94d0-9619ab5763d4" cid="3" class=""></colgroup><colgroup id="f09efb8c-d9e0-4f3c-b17a-4f3ed54015d1" cid="4" class=""></colgroup><colgroup id="f4fcb17a-46ed-44b3-a27b-12d63bc772ba" cid="5" class=""></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Source</td><td class="rt hr" cid="1">DF</td><td class="rt hr" cid="2">Adj SS</td><td class="rt hr" cid="3">Adj MS</td><td class="rt hr" cid="4">F-Value</td><td class="rt hr" cid="5">P-Value</td></tr><tr class="tdata"><td class="lft" cid="0">Coupon</td><td class="rt" cid="1">3</td><td class="rt" cid="2">0.8725</td><td class="rt" cid="3">0.29083</td><td class="rt" cid="4">7.84</td><td class="rt" cid="5">0.004</td></tr><tr class="tdata"><td class="lft" cid="0">Error</td><td class="rt" cid="1">12</td><td class="rt" cid="2">0.4450</td><td class="rt" cid="3">0.03708</td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">Total</td><td class="rt" cid="1">15</td><td class="rt" cid="2">1.3175</td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="7eaefa97-6412-4a25-83c6-212805686ccd" class="tabletitle">Model Summary</div><table id="7eaefa97-6412-4a25-83c6-212805686ccd" class="stattable"><colgroup id="94ca0af6-d0df-4845-b5a0-ea0328633f2d" cid="0"></colgroup><colgroup id="0af3f581-87d8-43c3-a6c0-e1eab29e4329" cid="1"></colgroup><colgroup id="c89bffeb-660f-4403-aa3d-afdd1096048e" cid="2" class=""></colgroup><colgroup id="89bbf544-1582-4f2e-b413-b320f4048112" cid="3" class=""></colgroup><tbody><tr class="tlabel hr"><td class="rt hr" cid="0">S</td><td class="rt hr" cid="1">R-sq</td><td class="rt hr" cid="2">R-sq(adj)</td><td class="rt hr" cid="3">R-sq(pred)</td></tr><tr class="tdata"><td class="rt" cid="0">0.192570</td><td class="rt" cid="1">66.22%</td><td class="rt" cid="2">57.78%</td><td class="rt" cid="3">39.95%</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="5e417494-3bff-49c3-9897-47337459dbee" class="tabletitle">Means</div><table id="5e417494-3bff-49c3-9897-47337459dbee" class="stattable"><colgroup id="53bf7a1b-74d1-4349-a5bb-ed1905435d60" cid="0"></colgroup><colgroup id="2a0767c6-6643-46b2-8eb9-0766a7b163be" cid="1"></colgroup><colgroup id="e3925dd6-5244-4610-8086-4e2fa7cea06d" cid="2"></colgroup><colgroup id="fe01fe77-2ced-4f8f-83a0-5480ef5538c4" cid="3"></colgroup><colgroup id="86abbcdb-6216-44e0-ba17-6815da553e01" cid="4" class=""></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Coupon</td><td class="rt hr" cid="1">N</td><td class="rt hr" cid="2">Mean</td><td class="rt hr" cid="3">StDev</td><td class="cen hr" cid="4">95% CI</td></tr><tr class="tdata"><td class="lft" cid="0">1</td><td class="rt" cid="1">4</td><td class="rt" cid="2">9.400</td><td class="rt" cid="3">0.216</td><td class="cen" cid="4">(9.190, 9.610)</td></tr><tr class="tdata"><td class="lft" cid="0">2</td><td class="rt" cid="1">4</td><td class="rt" cid="2">9.4250</td><td class="rt" cid="3">0.1258</td><td class="cen" cid="4">(9.2152, 9.6348)</td></tr><tr class="tdata"><td class="lft" cid="0">3</td><td class="rt" cid="1">4</td><td class="rt" cid="2">9.775</td><td class="rt" cid="3">0.206</td><td class="cen" cid="4">(9.565, 9.985)</td></tr><tr class="tdata"><td class="lft" cid="0">4</td><td class="rt" cid="1">4</td><td class="rt" cid="2">9.950</td><td class="rt" cid="3">0.208</td><td class="cen" cid="4">(9.740, 10.160)</td></tr></tbody></table><div id="60dbf72e-ee90-471e-82b9-de0a237e1ff5" class="footnote">Pooled StDev = 0.192570</div></div><div class="builtin" id="75a844cf-0fd5-4b6d-80ba-3932f50e66ee"><div class="textarea">Interval Plot of Y vs Coupon</div></div></div></div><div class="command-section" id="3df4e3c6-17f3-4c19-a2b5-9393722f3d99" style="width: 775px;"><div id="9529880b-2a67-47bf-89b1-9d73a94d55aa" class="commandtitlesection">General Linear Model: Reaction Time versus Batch, Day</div><div class="expander-section"><div class="tableselectioncontainer"><div id="ca919027-c887-4c0b-b442-5680aa2277a7" class="tabletitle">Method</div><table id="ca919027-c887-4c0b-b442-5680aa2277a7" class="stattable"><colgroup id="dc29983c-2b2f-48f9-8cb0-0da56a39978c" cid="0"></colgroup><colgroup id="b7f6913b-e8dc-4d5a-b1bf-acc295b55509" cid="1"></colgroup><tbody><tr class="tdata"><td class="lft" cid="0">Factor coding</td><td class="lft" cid="1">(-1, 0, +1)</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="eb171d99-6d4b-4577-a82d-17767ad3779f" class="tabletitle">Factor Information</div><table id="eb171d99-6d4b-4577-a82d-17767ad3779f" class="stattable"><colgroup id="f88e97f4-3a49-458e-a35b-c970b5519a4c" cid="0"></colgroup><colgroup id="edc111b7-ec98-4bb0-bdae-111536c8f2ce" cid="1"></colgroup><colgroup id="9b5424ff-ace0-46ed-a327-21e0d39112ac" cid="2" class=""></colgroup><colgroup id="98686c9f-4f12-4a68-9d4f-edcf4a357a5f" cid="3"></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Factor</td><td class="lft hr" cid="1">Type</td><td class="rt hr" cid="2">Levels</td><td class="lft hr" cid="3">Values</td></tr><tr class="tdata"><td class="lft" cid="0">Batch</td><td class="lft" cid="1">Fixed</td><td class="rt" cid="2">5</td><td class="lft" cid="3">1, 2, 3, 4, 5</td></tr><tr class="tdata"><td class="lft" cid="0">Day</td><td class="lft" cid="1">Fixed</td><td class="rt" cid="2">5</td><td class="lft" cid="3">1, 2, 3, 4, 5</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="9bc85fcb-ab35-40b2-8f28-ae7e78ff16d4" class="tabletitle">Analysis of Variance</div><table id="9bc85fcb-ab35-40b2-8f28-ae7e78ff16d4" class="stattable"><colgroup id="6883c555-a546-4fed-8dee-6097e9d93090" cid="0"></colgroup><colgroup id="ec0b0eea-48bf-4792-86cf-c8968cdb28c7" cid="1" class=""></colgroup><colgroup id="52a97982-5aac-4a47-a3f0-d830d907cb3d" cid="2" class=""></colgroup><colgroup id="eab60452-67e0-4f1c-905c-169f55524f78" cid="3" class=""></colgroup><colgroup id="9a78bc0b-b0de-408d-b242-9b15e0807512" cid="4"></colgroup><colgroup id="4f9114ec-ecc1-4c43-9eda-311594030037" cid="5" class=""></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Source</td><td class="rt hr" cid="1">DF</td><td class="rt hr" cid="2">Adj SS</td><td class="rt hr" cid="3">Adj MS</td><td class="rt hr" cid="4">F-Value</td><td class="rt hr" cid="5">P-Value</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; Batch</td><td class="rt" cid="1">4</td><td class="rt" cid="2">15.44</td><td class="rt" cid="3">3.860</td><td class="rt" cid="4">0.35</td><td class="rt" cid="5">0.844</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; Day</td><td class="rt" cid="1">4</td><td class="rt" cid="2">12.24</td><td class="rt" cid="3">3.060</td><td class="rt" cid="4">0.27</td><td class="rt" cid="5">0.891</td></tr><tr class="tdata"><td class="lft" cid="0">Error</td><td class="rt" cid="1">16</td><td class="rt" cid="2">178.96</td><td class="rt" cid="3">11.185</td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">Total</td><td class="rt" cid="1">24</td><td class="rt" cid="2">206.64</td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="d3a685c1-709e-4239-a7da-321ccbba51ce" class="tabletitle">Model Summary</div><table id="d3a685c1-709e-4239-a7da-321ccbba51ce" class="stattable"><colgroup id="5cbb29c2-7120-4af0-9420-bcc18830f481" cid="0"></colgroup><colgroup id="8c854826-364d-473e-8d40-18d9f894a15c" cid="1"></colgroup><colgroup id="dc25d10b-90c2-4126-896b-9c1359d5f598" cid="2" class=""></colgroup><colgroup id="1f201508-6081-4810-8f77-ee26ea4b7b32" cid="3"></colgroup><tbody><tr class="tlabel hr"><td class="rt hr" cid="0">S</td><td class="rt hr" cid="1">R-sq</td><td class="rt hr" cid="2">R-sq(adj)</td><td class="rt hr" cid="3">R-sq(pred)</td></tr><tr class="tdata"><td class="rt" cid="0">3.34440</td><td class="rt" cid="1">13.40%</td><td class="rt" cid="2">0.00%</td><td class="rt" cid="3">0.00%</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="c7d4dd21-00b3-45d5-b61f-fe6da3ca6f4d" class="tabletitle">Coefficients</div><table id="c7d4dd21-00b3-45d5-b61f-fe6da3ca6f4d" class="stattable"><colgroup id="e64c7f79-9a56-43c6-9319-497fbab64148" cid="0"></colgroup><colgroup id="42eac9ed-81fe-45f4-87b4-220b32221fa3" cid="1"></colgroup><colgroup id="623b7aba-abed-41e4-80b9-38a497908d7e" cid="2"></colgroup><colgroup id="3b6a293f-7017-4ba7-ac12-0b8fba0fc4b0" cid="3"></colgroup><colgroup id="8fb8d3df-9208-4932-9a67-c218ab299667" cid="4"></colgroup><colgroup id="66bff4c8-a8f6-4993-af1b-71498fe0bf2e" cid="5"></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Term</td><td class="rt hr" cid="1">Coef</td><td class="rt hr" cid="2">SE Coef</td><td class="rt hr" cid="3">T-Value</td><td class="rt hr" cid="4">P-Value</td><td class="rt hr" cid="5">VIF</td></tr><tr class="tdata"><td class="lft" cid="0">Constant</td><td class="rt" cid="1">5.880</td><td class="rt" cid="2">0.669</td><td class="rt" cid="3">8.79</td><td class="rt" cid="4">0.000</td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">Batch</td><td class="emptyline" cid="1">&nbsp; </td><td class="emptyline" cid="2">&nbsp; </td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 1</td><td class="rt" cid="1">-0.68</td><td class="rt" cid="2">1.34</td><td class="rt" cid="3">-0.51</td><td class="rt" cid="4">0.618</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 2</td><td class="rt" cid="1">0.32</td><td class="rt" cid="2">1.34</td><td class="rt" cid="3">0.24</td><td class="rt" cid="4">0.814</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 3</td><td class="rt" cid="1">-0.08</td><td class="rt" cid="2">1.34</td><td class="rt" cid="3">-0.06</td><td class="rt" cid="4">0.953</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 4</td><td class="rt" cid="1">1.32</td><td class="rt" cid="2">1.34</td><td class="rt" cid="3">0.99</td><td class="rt" cid="4">0.338</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">Day</td><td class="emptyline" cid="1">&nbsp; </td><td class="emptyline" cid="2">&nbsp; </td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 1</td><td class="rt" cid="1">0.72</td><td class="rt" cid="2">1.34</td><td class="rt" cid="3">0.54</td><td class="rt" cid="4">0.598</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 2</td><td class="rt" cid="1">-0.28</td><td class="rt" cid="2">1.34</td><td class="rt" cid="3">-0.21</td><td class="rt" cid="4">0.837</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 3</td><td class="rt" cid="1">-0.48</td><td class="rt" cid="2">1.34</td><td class="rt" cid="3">-0.36</td><td class="rt" cid="4">0.724</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 4</td><td class="rt" cid="1">-0.88</td><td class="rt" cid="2">1.34</td><td class="rt" cid="3">-0.66</td><td class="rt" cid="4">0.520</td><td class="rt" cid="5">1.60</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="e3469f88-e324-49ee-879e-b3201b62fe96" class="tabletitle">Regression Equation</div><table id="e3469f88-e324-49ee-879e-b3201b62fe96" class="stattable"><colgroup id="5885eea8-8483-4223-8bc4-2ceafaee86b2" cid="0"></colgroup><colgroup id="4682e631-0b1a-4e34-8084-4b2cb761d9c2" cid="1"></colgroup><colgroup id="9f35ea5a-2e88-45cb-9e8d-daad3612af32" cid="2" class=""></colgroup><tbody><tr class="tdata"><td class="lft" cid="0">Reaction Time</td><td class="lft" cid="1">=</td><td class="lft" cid="2">5.880 -&nbsp;0.68&nbsp;Batch_1 +&nbsp;0.32&nbsp;Batch_2 -&nbsp;0.08&nbsp;Batch_3 +&nbsp;1.32&nbsp;Batch_4<br>-&nbsp;0.88&nbsp;Batch_5 +&nbsp;0.72&nbsp;Day_1 -&nbsp;0.28&nbsp;Day_2 -&nbsp;0.48&nbsp;Day_3 -&nbsp;0.88&nbsp;Day_4<br>+&nbsp;0.92&nbsp;Day_5</td></tr></tbody></table></div></div></div><div class="command-section" id="25c8c4a8-63eb-4111-ba79-a466812ce18c" style="width: 775px;"><div id="38c48ae0-a139-4cca-941d-841a556b8d08" class="commandtitlesection">General Linear Model: Reaction Time versus Batch, Day, Ingreadients</div><div class="expander-section"><div class="tableselectioncontainer"><div id="88222355-f24e-4567-a973-6f6876da7e5b" class="tabletitle">Method</div><table id="88222355-f24e-4567-a973-6f6876da7e5b" class="stattable"><colgroup id="60902ab0-b71a-4d60-853f-572011e25403" cid="0" class=""></colgroup><colgroup id="3600756e-feb2-4fae-a711-ac0e96b9edba" cid="1"></colgroup><tbody><tr class="tdata"><td class="lft" cid="0">Factor coding</td><td class="lft" cid="1">(-1, 0, +1)</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="0e972c7d-b7a4-4486-9233-551aa5e307a9" class="tabletitle">Factor Information</div><table id="0e972c7d-b7a4-4486-9233-551aa5e307a9" class="stattable"><colgroup id="b6576021-79c9-4fbe-94e1-4d696949e28d" cid="0"></colgroup><colgroup id="d3c1342a-7dbd-4fd0-aa53-966d27bbfbdc" cid="1"></colgroup><colgroup id="34b9d635-0175-4909-9b75-a4e8450f849a" cid="2"></colgroup><colgroup id="bdd3ddae-e588-43ec-b2ea-135a77bbf47d" cid="3"></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Factor</td><td class="lft hr" cid="1">Type</td><td class="rt hr" cid="2">Levels</td><td class="lft hr" cid="3">Values</td></tr><tr class="tdata"><td class="lft" cid="0">Batch</td><td class="lft" cid="1">Fixed</td><td class="rt" cid="2">5</td><td class="lft" cid="3">1, 2, 3, 4, 5</td></tr><tr class="tdata"><td class="lft" cid="0">Day</td><td class="lft" cid="1">Fixed</td><td class="rt" cid="2">5</td><td class="lft" cid="3">1, 2, 3, 4, 5</td></tr><tr class="tdata"><td class="lft" cid="0">Ingreadients</td><td class="lft" cid="1">Fixed</td><td class="rt" cid="2">5</td><td class="lft" cid="3">A, B, C, D, E</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="7e3b3d10-34dc-4805-ab4f-bfd01cbd42ba" class="tabletitle">Analysis of Variance</div><table id="7e3b3d10-34dc-4805-ab4f-bfd01cbd42ba" class="stattable"><colgroup id="c9acd4ed-aae9-476f-935c-227b465366ba" cid="0"></colgroup><colgroup id="152b93a5-52fd-48dc-8537-4bd3a1f443dc" cid="1"></colgroup><colgroup id="fdd8f884-9426-4f6c-baee-3f483edd3738" cid="2"></colgroup><colgroup id="6bc395e9-c0a1-4f70-8154-89d9a4aa7ced" cid="3" class=""></colgroup><colgroup id="622c6a68-d599-4769-a099-4b17fabfafb6" cid="4" class=""></colgroup><colgroup id="0f85f26e-e43a-44b3-ad0b-9d5820d72daa" cid="5" class=""></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Source</td><td class="rt hr" cid="1">DF</td><td class="rt hr" cid="2">Adj SS</td><td class="rt hr" cid="3">Adj MS</td><td class="rt hr" cid="4">F-Value</td><td class="rt hr" cid="5">P-Value</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; Batch</td><td class="rt" cid="1">4</td><td class="rt" cid="2">15.44</td><td class="rt" cid="3">3.860</td><td class="rt" cid="4">1.23</td><td class="rt" cid="5">0.348</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; Day</td><td class="rt" cid="1">4</td><td class="rt" cid="2">12.24</td><td class="rt" cid="3">3.060</td><td class="rt" cid="4">0.98</td><td class="rt" cid="5">0.455</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; Ingreadients</td><td class="rt" cid="1">4</td><td class="rt" cid="2">141.44</td><td class="rt" cid="3">35.360</td><td class="rt" cid="4">11.31</td><td class="rt" cid="5">0.000</td></tr><tr class="tdata"><td class="lft" cid="0">Error</td><td class="rt" cid="1">12</td><td class="rt" cid="2">37.52</td><td class="rt" cid="3">3.127</td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">Total</td><td class="rt" cid="1">24</td><td class="rt" cid="2">206.64</td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="152a41d6-f8b9-42d6-ae0e-3a4e0b3436c6" class="tabletitle">Model Summary</div><table id="152a41d6-f8b9-42d6-ae0e-3a4e0b3436c6" class="stattable"><colgroup id="9ea9213f-baf1-4f94-bf18-3ff2fdb02306" cid="0" class=""></colgroup><colgroup id="c09df65a-8cb6-45d8-afd9-da34ba7e7923" cid="1" class=""></colgroup><colgroup id="d76a6d58-d5cc-4c16-92da-48dbbb1f7b04" cid="2"></colgroup><colgroup id="0f8aa3de-fd36-4f56-8d96-4e02c41ec2d8" cid="3"></colgroup><tbody><tr class="tlabel hr"><td class="rt hr" cid="0">S</td><td class="rt hr" cid="1">R-sq</td><td class="rt hr" cid="2">R-sq(adj)</td><td class="rt hr" cid="3">R-sq(pred)</td></tr><tr class="tdata"><td class="rt" cid="0">1.76824</td><td class="rt" cid="1">81.84%</td><td class="rt" cid="2">63.69%</td><td class="rt" cid="3">21.19%</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="9259bb9a-9647-4f8c-b133-1eada736059d" class="tabletitle">Coefficients</div><table id="9259bb9a-9647-4f8c-b133-1eada736059d" class="stattable"><colgroup id="e9f415e8-d4fd-4713-ac5a-91125842cb90" cid="0" class=""></colgroup><colgroup id="17405b21-33fb-43f7-8fc3-df97ff3c89cd" cid="1" class=""></colgroup><colgroup id="6d6b4e3b-6f4c-47c7-83b0-6e495514ba7b" cid="2" class=""></colgroup><colgroup id="c3f878f3-f536-4a2b-b3c9-d96df8b71bd3" cid="3" class=""></colgroup><colgroup id="18a43205-8295-4986-99e0-46fdddca0944" cid="4" class=""></colgroup><colgroup id="c5248c98-1b2d-45ee-9260-be56344af04d" cid="5" class=""></colgroup><tbody><tr class="tlabel hr"><td class="lft hr" cid="0">Term</td><td class="rt hr" cid="1">Coef</td><td class="rt hr" cid="2">SE Coef</td><td class="rt hr" cid="3">T-Value</td><td class="rt hr" cid="4">P-Value</td><td class="rt hr" cid="5">VIF</td></tr><tr class="tdata"><td class="lft" cid="0">Constant</td><td class="rt" cid="1">5.880</td><td class="rt" cid="2">0.354</td><td class="rt" cid="3">16.63</td><td class="rt" cid="4">0.000</td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">Batch</td><td class="emptyline" cid="1">&nbsp; </td><td class="emptyline" cid="2">&nbsp; </td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 1</td><td class="rt" cid="1">-0.680</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">-0.96</td><td class="rt" cid="4">0.355</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 2</td><td class="rt" cid="1">0.320</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">0.45</td><td class="rt" cid="4">0.659</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 3</td><td class="rt" cid="1">-0.080</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">-0.11</td><td class="rt" cid="4">0.912</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 4</td><td class="rt" cid="1">1.320</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">1.87</td><td class="rt" cid="4">0.087</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">Day</td><td class="emptyline" cid="1">&nbsp; </td><td class="emptyline" cid="2">&nbsp; </td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 1</td><td class="rt" cid="1">0.720</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">1.02</td><td class="rt" cid="4">0.329</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 2</td><td class="rt" cid="1">-0.280</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">-0.40</td><td class="rt" cid="4">0.699</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 3</td><td class="rt" cid="1">-0.480</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">-0.68</td><td class="rt" cid="4">0.510</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; 4</td><td class="rt" cid="1">-0.880</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">-1.24</td><td class="rt" cid="4">0.237</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">Ingreadients</td><td class="emptyline" cid="1">&nbsp; </td><td class="emptyline" cid="2">&nbsp; </td><td class="emptyline" cid="3">&nbsp; </td><td class="emptyline" cid="4">&nbsp; </td><td class="emptyline" cid="5">&nbsp; </td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; A</td><td class="rt" cid="1">2.520</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">3.56</td><td class="rt" cid="4">0.004</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; B</td><td class="rt" cid="1">-0.280</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">-0.40</td><td class="rt" cid="4">0.699</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; C</td><td class="rt" cid="1">2.920</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">4.13</td><td class="rt" cid="4">0.001</td><td class="rt" cid="5">1.60</td></tr><tr class="tdata"><td class="lft" cid="0">&nbsp; D</td><td class="rt" cid="1">-2.480</td><td class="rt" cid="2">0.707</td><td class="rt" cid="3">-3.51</td><td class="rt" cid="4">0.004</td><td class="rt" cid="5">1.60</td></tr></tbody></table></div><div class="tableselectioncontainer"><div id="367890da-125e-4041-b4d8-69447140333e" class="tabletitle">Regression Equation</div><table id="367890da-125e-4041-b4d8-69447140333e" class="stattable"><colgroup id="fc398606-b44d-4ab0-a24d-e0416d8ac526" cid="0"></colgroup><colgroup id="0e1a9627-7dab-42ce-9a0a-2c816179fb63" cid="1"></colgroup><colgroup id="031db519-6ddc-45bd-bc60-886d4341c8e4" cid="2"></colgroup><tbody><tr class="tdata"><td class="lft" cid="0">Reaction Time</td><td class="lft" cid="1">=</td><td class="lft" cid="2">5.880 -&nbsp;0.680&nbsp;Batch_1 +&nbsp;0.320&nbsp;Batch_2 -&nbsp;0.080&nbsp;Batch_3 +&nbsp;1.320&nbsp;Batch_4<br>-&nbsp;0.880&nbsp;Batch_5 +&nbsp;0.720&nbsp;Day_1 -&nbsp;0.280&nbsp;Day_2 -&nbsp;0.480&nbsp;Day_3 -&nbsp;0.880&nbsp;Day_4<br>+&nbsp;0.920&nbsp;Day_5 +&nbsp;2.520&nbsp;Ingreadients_A -&nbsp;0.280&nbsp;Ingreadients_B<br>+&nbsp;2.920&nbsp;Ingreadients_C -&nbsp;2.480&nbsp;Ingreadients_D -&nbsp;2.680&nbsp;Ingreadients_E</td></tr></tbody></table></div></div></div></body></html>
